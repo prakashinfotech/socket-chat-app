@@ -1,0 +1,452 @@
+<html>
+
+<head>
+    <title>Admin Portal</title>
+    <link rel="stylesheet" type="text/css" href="/custom.css">
+    <link rel="shortcut icon" href="#" />
+    <!-- <script src="http://127.0.0.1:4000/socket.io/socket.io.js"></script> -->
+    <script src="http://52.173.20.11:4000/socket.io/socket.io.js"></script>
+    <meta charset="windows-1252">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+
+</head>
+
+<body>
+    <strong>
+        <h1 id="titleLoginPage" style="color:burlywood;margin-left: 150px;position: relative;">Welcome to Admin-Portal
+        </h1>
+        <h2 style="color:burlywood;margin-left: 150px" id="hello"></h2>
+    </strong>
+    <div class="navbar navbar-fixed-top navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/admin">Chat</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/admin">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="/">User Screen</a></li>
+                    <li><a href="/test1">Test</a></li>
+                    <button style="margin-top: 10px; margin-left: 1392px" type="button" class="btn btn-danger"
+                        id="logout" onclick="logout()">Logout</button>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row row-offcanvas row-offcanvas-left">
+            <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+                <div class="sidebar-nav">
+                    <ul class="nav">
+
+                        <li><a href="#" onclick="userNameForm()">Admin Name</a></li>
+                        <li><a href="#" onclick="onlineUsers()">Online Users</a></li>
+                        <li><a href="#" onclick="userMessages()">User Message</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row" id="userFormArea">
+                    <div class="col-md-6">
+                        <form id="userForm">
+                            <div class="form-group">
+                                <label>Enter Username</label>
+                                <input type="text" class="form-control" id="Name" />
+                                <br />
+                                <button type="button" id="say_hello" class="btn btn-primary"
+                                    onclick="temp()">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div id="messageArea" class="row">
+                    <div class="col-md-4">
+                        <div class="well" id="forUsers">
+                            <h3>Users</h3>
+                            <ul class="list-group" id="users">
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="chat" id="chat"></div>
+                        <form id="messageForm">
+                            <button class="btn btn-danger" id="clearChat">Clear</button>
+
+                            <div class="card" id="userMessages">
+
+                                <div id="messages" class="card-block">
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div>
+                <form class="chat-form" id="chatFormId">
+                    <div id="admin"><b>Hey Admin, </b> <button type="button" class="cancelAdmin" onclick="closeForm()">
+                            <i class="fa fa fa-times" aria-hidden="true"></i>
+                        </button></div>
+                    <br />
+                    <label><b>To: </b></label>
+                    <br />
+                    <input id="PName" name="PName" required />
+                    <br />
+                    <br />
+
+                    <div class="card2" id="userMessages2">
+                        <div id="messages2" class="card-block2">
+
+                        </div>
+                    </div>
+
+                    <label><b>Message: </b></label>
+                    <br />
+                    <textarea rows="2" id="msg" name="msg" placeholder="Type message.." required></textarea>
+                    <br />
+                    &nbsp;
+                    <br />
+                    <button type="button" id="msgsubmit" class="btn btn-success"
+                        onclick="privatemessage()">Send</button>
+
+                    <ul id="message">
+
+                    </ul>
+                    <!-- <button type="button" class="btn cancel btn-danger" onclick="closeForm()">Close</button> -->
+                </form>
+                <button type="button" class="open-button" onclick="openForm()">Chat
+                    <i class="fa fa-comments-o" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+
+    //#region Admin name bind
+
+    document.getElementById("hello").innerHTML = 'Hello ' + localStorage.getItem('name');
+
+    $(window).on('load', function () {
+        localStorage.getItem('name');
+    })
+
+    //#endregion
+
+    //#region  Logout Function
+
+    function logout() {
+        localStorage.removeItem('name');
+        $.post("/logout", function (data) {
+            // if (data === 'done') {
+            window.location.href = "/login";
+            //  }
+        });
+    }
+
+    //#endregion
+
+    //#region  Hide show functions
+
+    function openForm() {
+        document.getElementById("chatFormId").style.display = "block";
+    }
+    function closeForm() {
+        document.getElementById("chatFormId").style.display = "none";
+    }
+
+    function onlineUsers() {
+        document.getElementById("forUsers").style.display = "block";
+        //  document.getElementById("userMessages").style.display = "none";
+        document.getElementById("userForm").style.display = "none";
+    }
+
+    function userMessages() {
+        // document.getElementById("userMessages2").style.display = "block";
+        document.getElementById("userMessages").style.display = "block";
+        document.getElementById("clearChat").style.display = "block";
+        document.getElementById("userForm").style.display = "none";
+    }
+    function userNameForm() {
+        document.getElementById("userForm").style.display = "block";
+        document.getElementById("forUsers").style.display = "none";
+        document.getElementById("userMessages").style.display = "none";
+        document.getElementById("clearChat").style.display = "none";
+    }
+
+    //#endregion
+
+    //#region  Form Validation
+
+    function formValidation() {
+        $("#chatFormId").validate({
+            rules: {
+                PName: {
+                    required: true,
+                },
+                msg: {
+                    required: true,
+                }
+            },
+            errorPlacement: function (error, element) {
+                var placement = $(element).data('error');
+                if (placement) {
+                    $(placement).append(error)
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+        })
+        return $("#chatFormId").valid();
+    }
+
+    //#endregion
+
+    //#region Array and varible declaretion
+
+    adminMessages = []
+    allUsers = []
+    messagess = []
+    allMessages = [];
+
+    // var socket = io.connect('http://127.0.0.1:4000');
+    var socket = io.connect('http://52.173.20.11:4000');
+    var $Name = $('#Name');
+    var $users = $('#users');
+    var $messages = $('#messages')
+    var $messages2 = $('#messages2')
+    var $clearChat = $('#clearChat')
+
+    //#endregion
+
+    //#region  User Related function
+
+    socket.emit('username', $Name);
+
+    var Nametemp = localStorage.getItem('name')
+
+    socket.emit('new user', Nametemp, function (data) {
+        if (data) {
+
+        }
+    });
+
+    socket.on('get users', function (data) {
+        allUsers = [];
+        data.forEach(i => {
+            allUsers.push(i)
+        })
+
+        var html = '';
+        for (i = 0; i < data.length; i++) {
+            html += '<li class="list-group-item" data-socketId=' + data[i].Id + '>' + data[i].Name + '<i class="fa fa-circle status"></i>' + '</li>';
+        }
+        $users.html(html)
+
+    });
+
+    function temp() {
+        socket.emit('new user', $Name.val(), function (data) {
+            if (data) {
+            }
+        });
+        $Name.val('');
+    }
+
+    //#endregion
+
+    //#region  Enter key event for text area
+
+    $('#msg').keypress(function (event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13' && !event.shiftKey) {
+            event.preventDefault();
+            var isValidate = formValidation()
+            if (isValidate) {
+                allUsers.forEach(i => {
+                    if (i.Name == $('#PName').val() && $('#msg').val() !== '') {
+                        socket.emit("private-message", {
+                            msgTo: $('#PName').val(),
+                            "msg": $('#msg').val(),
+                            toId: i.Id
+                            //toId:allUsers
+                        });
+                    }
+                });
+            }
+            $('#msg').val('');
+            return false
+        }
+    });
+
+    //#endregion
+
+    //#region  Send message onClick
+
+    function privatemessage() {
+        var isValidate = formValidation()
+        if (isValidate) {
+            allUsers.forEach(i => {
+                if (i.Name == $('#PName').val() && $('#msg').val() !== '') {
+                    socket.emit("private-message", {
+                        msgTo: $('#PName').val(),
+                        "msg": $('#msg').val(),
+                        toId: i.Id
+                        //toId:allUsers
+                    });
+                }
+            });
+        }
+        $('#msg').val('');
+    }
+
+    //#endregion
+
+    //#region function for bind messages 
+
+    // function bindAllMessages(selectedName) {
+    //     socket.on('all messages', function (data) {
+    //         if (data.length) {
+    //             allMessages.push(data);
+    //             for (var x = 0; x < data.length; x++) {
+    //                 // Build out message div
+    //                 if (data[x].Name == selectedName) {
+
+    //                     var message = document.createElement('div');
+    //                     message.setAttribute('class', 'chat-message');
+    //                     message.textContent = data[x].Name + ": " + data[x].msg;
+    //                     messages.appendChild(message);
+    //                     messages.insertBefore(message, messages.firstChild);
+    //                 }
+    //             }
+    //         }
+    //     })
+    // }
+
+    //#endregion
+
+    //#region Display User Messages
+
+    socket.on('all messages', function (data) {
+        if (data.length) {
+            allMessages.push(data);
+            for (var x = 0; x < data.length; x++) {
+                // Build out message div
+                var message = document.createElement('div');
+                message.setAttribute('class', 'chat-message');
+                message.textContent = data[x].Name + ": " + data[x].msg;
+                messages.appendChild(message);
+                messages.insertBefore(message, messages.firstChild);
+            }
+        }
+    });
+
+    //#endregion
+
+    //#region  Clear or Delete all user messages
+
+    $('#clearChat').on('click', (event) => {
+        event.preventDefault();
+        socket.emit('clear');
+
+        socket.on('cleared', function () {
+            $messages.html('')
+            allMessages = []
+
+        });
+    });
+
+    //#endregion
+
+    //#region  Display Admin Message
+
+    socket.on('output pmessages', function (data) {
+
+        if (data.length) {
+            adminMessages.push(data);
+
+            for (var x = 0; x < data.length; x++) {
+                var message = document.createElement('div');
+                message.setAttribute('class', 'admin-message2');
+                message.textContent = 'Psspl to' + ' ' + data[x].msgTo + ":" + data[x].msg;
+                messages2.appendChild(message);
+                messages2.insertBefore(message, messages2.firstChild);
+            }
+        }
+    });
+
+    //#endregion
+
+    //#region  Onlick for Li message display and open chat box
+
+    $(document).ready(function () {
+        allMessages = []
+        adminMessages = []
+        //bindAllMessages();
+        // $(document).off('click', '#users li', function () { })
+        $(document).on('click', '#users li', (e) => {
+            $("#messages").empty();
+            $("#messages2").empty();
+            $('#users li').removeClass('active');
+            $(e.currentTarget).addClass('active');
+
+            var selectedName = $(e.currentTarget).text();
+            $("#PName").val(selectedName)
+
+            document.getElementById("chatFormId").style.display = "block";
+            adminMessages.forEach(i => {
+                for (var x = 0; x < i.length; x++) {
+                    if (i[x].msgTo == $('#PName').val()) {
+                        var message = document.createElement('div');
+                        message.setAttribute('class', 'admin-message2');
+                        message.textContent = 'Psspl TO' + ' ' + i[x].msgTo + ":" + i[x].msg;
+                        messages2.appendChild(message);
+                        messages2.insertBefore(message, messages2.firstChild);
+                    }
+                }
+            });
+
+            allMessages.forEach(i => {
+                for (var x = 0; x < i.length; x++) {
+                    if (i[x].Name == selectedName) {
+                        var message = document.createElement('div');
+                        message.setAttribute('class', 'chat-message');
+                        message.textContent = i[x].Name + ": " + i[x].msg;
+                        messages.appendChild(message);
+                        messages.insertBefore(message, messages.firstChild);
+                    }
+                }
+            });
+
+            if (selectedName === localStorage.getItem('name')) {
+                $('#users li').removeClass('active');
+                alert("You can't message yourself")
+                document.getElementById("chatFormId").style.display = "none";
+            }
+        })
+    });
+
+    //#endregion
+
+</script>
+
+</html>

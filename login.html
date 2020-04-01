@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="/custom.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <!-- <script src="http://52.173.20.11:4000/socket.io/socket.io.js"></script> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="windows-1252">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+</head>
+
+<body>
+    <div>
+        <div id="loginForm">
+            <form id="LoginForm">
+                <h2 id="titleLoginPage" style="margin-bottom: 50px;margin-left: 100px;  color:goldenrod">Login</h2>
+
+                <div class="">
+                    <label class="font-weight-bold text-justify">User Name</label>
+                    <input type="text" class="" name="username" id="username" onblur="invalidMessageDisplay()"
+                        onchange="invalidMessageDisplay()" onkeydown="invalidMessageDisplay()"
+                        placeholder="* Enter User Name" required>
+                </div>
+                <div class="">
+                    <label class="font-weight-bold text-justify">Password</label>
+                    <input type="password" class="" name="password" id="password" onblur="invalidMessageDisplay()"
+                        onchange="invalidMessageDisplay()" onkeydown="invalidMessageDisplay()"
+                        placeholder="* Enter Password" required>
+
+                </div>
+                <p class="errorIfInvalIdInput" id="invalid">Invalid credentials</p>
+                <br />
+                <button type="submit" id="vi" class="btn btn-success">Login</button>
+                <button type="button" id="reset" class="btn btn-danger mr-3">Reset</button>
+                <button type="button" id="reg" class="btn btn-primary mr-3" onclick="registerForm()">Register</button>
+
+            </form>
+        </div>
+
+        <div id="regiForm">
+            <form id="RegiForm">
+                <h2 id="titleLoginPage" style="margin-bottom: 50px;margin-left: 100px;  color:goldenrod">Register</h2>
+
+                <div class="">
+                    <label class="font-weight-bold text-justify">User Name</label>
+                    <input type="text" class="" name="regiUsername" id="regiUsername" placeholder="* Enter User Name"
+                        required>
+                </div>
+                <div class="">
+                    <label class="font-weight-bold text-justify">Password</label>
+                    <input type="password" class="" name="regiPassword" id="regiPassword" placeholder="* Enter Password"
+                        required>
+
+                </div>
+
+                <div class="">
+                    <label>Role</label>
+                    <div>
+                        <label class="radioButton"> <input type="radio" name="role" id="role"
+                                value="admin">Admin</label>
+                        <label class="radioButton"> <input type="radio" name="role" id="role"
+                                value="guest">Guest</label>
+                    </div>
+                </div>
+
+                <br />
+                <button type="button" id="regForm" class="btn btn-success mr-3" onclick="register()">Submit</button>
+                <button type="button" id="regiReset" class="btn btn-danger mr-3">Reset</button>
+                <button type="button" class="btn btn-primary mr-3" onclick="cancelbtn()">Cancel</button>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+        var socket = io.connect('http://52.173.20.11:4000');
+        var $invalid = $('#invalid');
+        var $username = $('#username');
+
+        $invalid.hide();
+
+        //#region Validation 
+
+        function invalidMessageDisplay() {
+            $('#invalid').hide();
+        }
+
+        function formValidation() {
+            $("#LoginForm").validate({
+                rules: {
+                    username: {
+                        required: true,
+                    },
+                    password: {
+                        required: true,
+                    }
+                },
+
+                errorPlacement: function (error, element) {
+                    var placement = $(element).data('error');
+                    if (placement) {
+                        $(placement).append(error)
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            })
+            return $("#LoginForm").valid();
+        }
+
+        function regiformValidation() {
+            $("#RegiForm").validate({
+                rules: {
+                    regiUsername: {
+                        required: true,
+                    },
+                    regiPassword: {
+                        required: true,
+                    }
+                },
+                errorPlacement: function (error, element) {
+                    var placement = $(element).data('error');
+                    if (placement) {
+                        $(placement).append(error)
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            })
+            return $("#RegiForm").valid();
+        }
+
+        //#endregion
+
+        //#region onClick for Login and find user 
+
+        $('#vi').on('click', (event) => {
+            event.preventDefault();
+            var isValidate = formValidation()
+            if (isValidate) {
+                socket.emit('findUser', {
+                    username: $('#username').val(),
+                    password: $('#password').val()
+                });
+
+                socket.on('redirect', function (destination) {
+                    window.location.href = destination;
+                });
+
+                localStorage.setItem('name', $('#username').val());
+
+                socket.emit('new user', $username.val(), function (data) {
+                    if (data) {
+
+                    }
+                });
+
+                username = $("#username").val();
+                password = $("#password").val();
+
+                $.post("/loginPage", { username: username, password: password }, function (data) {
+                    if (data === 'done') {
+                        //window.location.href = "/admin";
+                    }
+                });
+
+                socket.on('my error', function (text) {
+                    console.log(text);
+                    $invalid.show();
+
+                });
+            }
+        });
+
+        //#endregion
+
+
+        //#region  Reset form
+
+        $('#reset').on('click', (event) => {
+            event.preventDefault();
+            $('#username').val('');
+            $('#password').val('');
+        });
+
+        //#endregion
+        // socket.emit('username', $Name);
+
+        //#region  Get Online User list
+
+        socket.on('get users', function (data) {
+            var html = '';
+            for (i = 0; i < data.length; i++) {
+                html += '<li class="list-group-item" data-socketId=' + data[i].Id + '>' + data[i].Name + '</li>';
+            }
+            //$users.html(html)
+        });
+
+        //#endregion
+
+        //#region  Register user function
+
+        function registerForm() {
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("regiForm").style.display = "block";
+        }
+
+        function register() {
+
+            var isValidate = regiformValidation()
+            if (isValidate) {
+                document.getElementById("loginForm").style.display = "block";
+                document.getElementById("regiForm").style.display = "none";
+
+                var ele = document.getElementsByName('role');
+
+                for (i = 0; i < ele.length; i++) {
+                    if (ele[i].checked)
+
+                        socket.emit('regiUser', {
+
+                            username: $('#regiUsername').val(),
+                            password: $('#regiPassword').val(),
+                            role: ele[i].value
+                        });
+                }
+                $('#regiUsername').val('')
+                $('#regiPassword').val('')
+                $('input[name=role]').attr('checked', false);
+
+            }
+        }
+
+        //#endregion
+
+        //#region  Reset Register form and cancel button for register form
+
+        $('#regiReset').on('click', (event) => {
+            event.preventDefault();
+            $('#regiUsername').val('');
+            $('#regiPassword').val('');
+            $('input[name=role]').attr('checked', false);
+
+        });
+
+        function cancelbtn() {
+            document.getElementById("loginForm").style.display = "block";
+            document.getElementById("regiForm").style.display = "none";
+        }
+
+        //#endregion
+
+    </script>
+</body>
+
+</html>

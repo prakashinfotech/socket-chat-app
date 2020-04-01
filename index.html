@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chat</title>
+    <link rel="shortcut icon" href="#" />
+    <!-- <link rel="stylesheet" type="text/css" href="/index.css"> -->
+    <link rel="stylesheet" type="text/css" href="/custom.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="http://52.173.20.11:4000/socket.io/socket.io.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+
+</head>
+
+<body>
+    <strong>
+        <h4 style="margin-left: 5px;">Click on the button at the bottom of this page to
+            open the chat form. </h4>
+    </strong>
+    <button type="button" class="open-button" onclick="openForm()">Chat
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+    </button>
+
+    <div class="chat-popup" id="myForm">
+
+        <form id="addUserForm" class="form-container">
+            <h1 id="chatTitle">Chat</h1>
+            <button type="button" class="cancel" onclick="closeForm()">
+                <i class="fa fa-times" id="windowClose" aria-hidden="true"></i>
+            </button>
+            <div class="divvalidate">
+            </div>
+
+            &nbsp;
+            <br />
+            <label for="Name" class="">Name</label>
+            <div class="">
+                <input type="text" name="Name" id="Name" placeholder="* Name"
+                    onchange="document.getElementById('NameChat').value = document.getElementById('Name').value;"
+                    onfocus="validate()" />
+            </div>
+
+            <label for="inputEmail3" class="">Email</label>
+            <div class="">
+                <input type="email" class="" id="Email" name="Email" placeholder="* Email" onfocus="validate()"
+                    required>
+            </div>
+
+            <label for="Number" class="">Number</label>
+            <div class="">
+                <input type="tel" onkeypress="return isNumberKey(event)" class="" id="Number" name="Number"
+                    placeholder="* Number" onfocus="validate()" required>
+            </div>
+
+            <label for="Question" class="">Question</label>
+
+            <textarea id="textarea" class="" name="Question" placeholder="* Enter message..." onfocus="validate()"
+                required></textarea>
+
+            <br /><br />
+            <button type="submit" id="vi" class="btn btn-success" onclick="temp()">Send</button>
+        </form>
+    </div>
+    <div class="chat-popup" id="myForm2">
+
+        <form class="form-container" id="myForm3">
+            <h1 id="chatTitle">Chat</h1>
+            <button type="button" class="cancelChat" onclick="closeFormMessage()">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+            <div class="divvalidate">
+            </div>
+            &nbsp;
+            <br />
+            <label for="msg"><b>Message</b></label>
+            <input type="text" class="" name="NameChat" id="NameChat" placeholder="* Name" required />
+
+            <div class="cardIndex">
+                <div id="messages" class="card-block">
+
+                </div>
+            </div>
+            <textarea id="msgbox" placeholder="Type message.." rows="2" name="msg" required></textarea>
+            &nbsp; &nbsp;
+            &nbsp;
+            <button type="submit" id="msgsubmit" class="btn btn-success">Send</button>
+        </form>
+    </div>
+
+    <script>
+
+        //#region  Not enter char in number field
+
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+
+        //#endregion
+
+        //#region  Form validation
+
+        function formValidation() {
+            $("#addUserForm").validate({
+                rules: {
+                    Name: {
+                        required: true,
+                    },
+                    Number: {
+                        required: true,
+                    },
+                    Question: {
+                        required: true,
+                    },
+                    Email: {
+                        required: true,
+                    }
+                },
+                errorPlacement: function (error, element) {
+                    var placement = $(element).data('error');
+                    if (placement) {
+                        $(placement).append(error)
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            })
+            return $("#addUserForm").valid();
+        }
+
+        function formValidationMessageField() {
+            $("#myForm3").validate({
+                rules: {
+                    msg: {
+                        required: true,
+                    }
+                },
+                errorPlacement: function (error, element) {
+                    var placement = $(element).data('error');
+                    if (placement) {
+                        $(placement).append(error)
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            })
+            return $("#myForm3").valid();
+        }
+
+        //#endregion
+
+        //#region Var and Array declare
+
+        socketId = []
+        var $myForm2 = $('#myForm2');
+        var $myForm = $('#myForm');
+        var $addUserForm = $('#addUserForm')
+        var $Name = $('#Name')
+        var $msg = $('#msgbox')
+        var Name = $('#Name')
+        var $NameChat = $('#NameChat')
+        var $Pmessages = $('#Pmessages')
+        var $messages = $('#messages')
+        var $validate = $('.validate')
+
+        //#endregion
+
+        //#region hide show form and message
+
+        $myForm2.hide();
+        $NameChat.hide();
+
+        function validate() {
+            $validate.hide();
+        }
+
+        //#endregion
+
+        //#region  Hide show Chat form
+
+        function openForm() {
+            document.getElementById("myForm").style.display = "block";
+        }
+
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+
+
+        function closeFormMessage() {
+            document.getElementById("myForm2").style.display = "none";
+        }
+
+        //#endregion
+
+        //#region Enter keypress for text area
+
+        $('#msgbox').keypress(function (event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13' && !event.shiftKey) {
+                event.preventDefault();
+                var isValidate = formValidationMessageField()
+                if (isValidate) {
+                    socket.emit('nameandmessage', {
+                        msg: $('#msgbox').val(),
+                        //  $Name : $('#Name').val()
+                        Name: $('#NameChat').val(),
+                        socketId: socket.id
+                    });
+                }
+                $('#msgbox').val('')
+            }
+        });
+
+        //#endregion
+
+        //#region  Socket connect
+
+        var socket = io.connect('http://52.173.20.11:4000/', { transports: ['websocket'], upgrade: false });
+
+        socket.on('connect', () => {
+            // console.log(socket.id, 'socket.id'); // an alphanumeric id...
+            socketId.push(socket.id)
+        });
+
+        //#endregion
+
+        //#region  display Admin and User messages
+
+        //original
+        // Handle Output
+        socket.on('output pmessages', function (data) {
+            // var uName = localStorage.getItem('name')
+            if ((data.length) && (data[0].toId == socket.id) && (data[0].msgTo == $('#NameChat').val())) {
+                for (var x = 0; x < data.length; x++) {
+                    // Build out message div
+                    //  var html = ''
+                    var message = document.createElement('div');
+                    message.setAttribute('class', 'admin-message');
+                    // document.getElementById("messages").innerHTML += '<p><b>Agent</b></p><p class="txtmsg">' + data[x].msg + '</p>';
+                    //    message.textContent = html += '<p>Agent</p><p class="txtmsg">' + data[x].msg + '</p>';
+                    message.textContent = 'Psspl' + ":" + data[x].msg; //data[x].msgTo (for Name)
+                    messages.appendChild(message);
+                    messages.insertAfter(message, messages.firstChild);
+                    //    $messages.html(html)
+                    // html += '<li class="list-group-item">' + data[i] + '</li>';
+                }
+            }
+        });
+
+        // Handle Output User 
+        socket.on('all messages', function (data) {
+            if ((data.length) && (data[0].Name == $('#NameChat').val()) && (data[0].msg != undefined)) {
+                for (var x = 0; x < data.length; x++) {
+                    // Build out message div
+                    var message = document.createElement('div');
+                    message.setAttribute('class', 'user-message');
+                    message.textContent = 'Me' + ": " + data[x].msg;
+                    messages.appendChild(message);
+                    messages.insertAfter(message, messages.firstChild);
+                }
+            }
+        });
+
+        //#endregion
+
+        //#region  onClick for send message
+
+        $('#vi').on('click', (event) => {
+            event.preventDefault();
+            var isValidate = formValidation()
+            if (isValidate) {
+                // socket.emit('input', {
+                //     Name: $('#Name').val(),
+                //     Email: $('#Email').val(),
+                //     Number: $('#Number').val(),
+                //     Question: $('#textarea').val(),
+                // });
+                $myForm2.show();
+                $myForm.hide();
+            }
+        });
+
+        $('#msgsubmit').on('click', (event) => {
+            event.preventDefault();
+            var isValidate = formValidationMessageField()
+            if (isValidate) {
+                socket.emit('nameandmessage', {
+                    msg: $('#msgbox').val(),
+                    //  $Name : $('#Name').val()
+                    Name: $('#NameChat').val(),
+                    socketId: socket.id
+                });
+            }
+
+            $myForm2.show();
+            $myForm.hide();
+            $('#msgbox').val('')
+        });
+
+        //#endregion
+
+        //#region callback 
+
+        socket.on('callback', function (data) {
+            console.log(data.done);
+            // Print the data.data somewhere...
+        });
+
+        //#endregion
+
+        //#region  Get online Users 
+
+        socket.emit('username', Name, socket.id);
+        users = []
+        var $users = $('#users');
+
+        socket.on('get users', function (data, socketId) {
+            var html = '';
+            for (i = 0; i < data.length; i++) {
+                html += '<li class="list-group-item">' + data[i] + '</li>';
+            }
+            $users.html(html)
+        });
+
+        //#endregion
+
+        //#region Submit form details function
+
+        function temp() {
+            var isValidate = formValidation()
+            if (isValidate) {
+                socket.emit('input', {
+                    Name: $('#Name').val(),
+                    Email: $('#Email').val(),
+                    Number: $('#Number').val(),
+                    Question: $('#textarea').val(),
+                    userId: socket.id
+                });
+
+                //Mail function
+                var from, to, subject, text;
+                from = "notifications@prakashinfotech.com";
+                to = 'vishal.matthar@prakashinfotech.com';
+                subject = 'New user for chat';
+                text = 'http://localhost:4000/admin';
+                $.get("/send", { from: from, to: to, subject: subject, text: text }, function (data) {
+                    if (data == "sent") {
+                        //   $("#message").empty().html("<p>Email is been sent at " + to + " . Please check inbox !</p>");
+                    }
+                });
+            }
+
+            var isValidate = formValidation()
+            if (isValidate) {
+                socket.emit('new user', $Name.val(), function (data) {
+                    if (data) {
+
+                    }
+                    $('#Name').val('')
+                    $('#Email').val('')
+                    $('#Number').val('')
+                    $('#textarea').val('')
+                });
+            }
+        }
+
+        //#endregion
+    </script>
+</body>
+
+</html>
