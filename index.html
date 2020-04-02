@@ -5,9 +5,14 @@
     <title>Chat</title>
     <link rel="shortcut icon" href="#" />
     <!-- <link rel="stylesheet" type="text/css" href="/index.css"> -->
-    <link rel="stylesheet" type="text/css" href="/custom.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css//jquery.mCustomScrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="css/theme.css">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="js/jquery.mCustomScrollbar.js"></script>
+    
     <script src="http://localhost:4000/socket.io/socket.io.js"></script>
 
     <!-- <script src="http://52.173.20.11:4000/socket.io/socket.io.js"></script> -->
@@ -18,83 +23,90 @@
 
 </head>
 
-<body>
+<body class="dark">
     <strong>
         <h4 style="margin-left: 5px;">Click on the button at the bottom of this page to
             open the chat form. </h4>
     </strong>
-    <button type="button" class="open-button" onclick="openForm()">Chat
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
+    <button class="btn-theme-change">Theme Change</button>
+    <button type="button" class="open-button" onclick="openForm()">Live Chat
     </button>
 
     <div class="chat-popup" id="myForm">
 
         <form id="addUserForm" class="form-container">
-            <h1 id="chatTitle">Chat</h1>
-            <button type="button" class="cancel" onclick="closeForm()">
+            <h1 class="chatTitle">Customer Support <br />Chat Service</h1>
+            <button type="button" class="btn-cancel" onclick="closeForm()">
                 <i class="fa fa-times" id="windowClose" aria-hidden="true"></i>
             </button>
-            <div class="divvalidate">
+            <div class="inner px-3">
+
+                <div class="divvalidate">
+                </div>
+
+                <div class="form-group">
+                    <label for="Name" class="">Name</label>
+                    <div class="">
+                        <input type="text" class="form-control" name="Name" id="Name" placeholder="* Name"
+                            onchange="document.getElementById('NameChat').value = document.getElementById('Name').value;"
+                            onfocus="validate()" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="">Email</label>
+                    <div class="">
+                        <input type="email" class="form-control" id="Email" name="Email" placeholder="* Email"
+                            onfocus="validate()" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Number" class="">Number</label>
+                    <div class="">
+                        <input type="tel" onkeypress="return isNumberKey(event)" class="form-control" id="Number"
+                            name="Number" placeholder="* Number" onfocus="validate()" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Question" class="">Question</label>
+
+                    <textarea id="textarea" class="form-control" name="Question" placeholder="* Enter message..."
+                        onfocus="validate()" required></textarea>
+                </div>
+                <div class="form-group text-right">
+                    <button type="submit" id="vi" class="btn btn-outline-danger" onclick="temp()">Send</button>
+                </div>
             </div>
-
-            &nbsp;
-            <br />
-            <label for="Name" class="">Name</label>
-            <div class="">
-                <input type="text" name="Name" id="Name" placeholder="* Name"
-                    onchange="document.getElementById('NameChat').value = document.getElementById('Name').value;"
-                    onfocus="validate()" />
-            </div>
-
-            <label for="inputEmail3" class="">Email</label>
-            <div class="">
-                <input type="email" class="" id="Email" name="Email" placeholder="* Email" onfocus="validate()"
-                    required>
-            </div>
-
-            <label for="Number" class="">Number</label>
-            <div class="">
-                <input type="tel" onkeypress="return isNumberKey(event)" class="" id="Number" name="Number"
-                    placeholder="* Number" onfocus="validate()" required>
-            </div>
-
-            <label for="Question" class="">Question</label>
-
-            <textarea id="textarea" class="" name="Question" placeholder="* Enter message..." onfocus="validate()"
-                required></textarea>
-
-            <br /><br />
-            <button type="submit" id="vi" class="btn btn-success" onclick="temp()">Send</button>
         </form>
     </div>
     <div class="chat-popup" id="myForm2">
 
         <form class="form-container" id="myForm3">
-            <h1 id="chatTitle">Chat</h1>
-            <button type="button" class="cancelChat" onclick="closeFormMessage()">
+            <h1 class="chatTitle shadow-sm">Customer Support <br /> Chat Service</h1>
+            <button type="button" class="btn-cancel" onclick="closeFormMessage()">
                 <i class="fa fa-times" aria-hidden="true"></i>
             </button>
-            <div class="divvalidate">
-            </div>
-            &nbsp;
-            <br />
-            <label for="msg"><b>Message</b></label>
-            <input type="text" class="" name="NameChat" id="NameChat" placeholder="* Name" required />
+            <div class="inner">
+                <div class="divvalidate">
+                </div>
+                <input type="text" class="" name="NameChat" id="NameChat" placeholder="* Name" required />
 
-            <div class="cardIndex">
-                <div id="messages" class="card-block">
+                <div class="clearfix mb-3 px-3">
+                    <div id="messages" class="card-block clearfix custom-scroll">
 
+                    </div>
+                </div>
+                <div class="d-flex p-3 bottom-block">
+                    <div class="flex-fill mr-3">
+                    <textarea id="msgbox" placeholder="Type message.." rows="2" name="msg"
+                        class="form-control" required></textarea>
+                    </div>
+                    <button type="submit" id="msgsubmit" class="btn btn-outline-danger px-2">Send</button>
                 </div>
             </div>
-            <textarea id="msgbox" placeholder="Type message.." rows="2" name="msg" required></textarea>
-            &nbsp; &nbsp;
-            &nbsp;
-            <button type="submit" id="msgsubmit" class="btn btn-success">Send</button>
         </form>
     </div>
 
     <script>
-
         //#region  Not enter char in number field
 
         function isNumberKey(evt) {
@@ -225,7 +237,7 @@
         //#region  Socket connect
         var socket = io.connect('http://localhost:4000');
 
-       // var socket = io.connect('http://52.173.20.11:4000/', { transports: ['websocket'], upgrade: false });
+        // var socket = io.connect('http://52.173.20.11:4000/', { transports: ['websocket'], upgrade: false });
 
         socket.on('connect', () => {
             // console.log(socket.id, 'socket.id'); // an alphanumeric id...
@@ -244,13 +256,17 @@
                 for (var x = 0; x < data.length; x++) {
                     // Build out message div
                     //  var html = ''
+                    //debugger
                     var message = document.createElement('div');
-                    message.setAttribute('class', 'admin-message');
+                    message.setAttribute('class', 'msg-block admin-message');
                     // document.getElementById("messages").innerHTML += '<p><b>Agent</b></p><p class="txtmsg">' + data[x].msg + '</p>';
                     //    message.textContent = html += '<p>Agent</p><p class="txtmsg">' + data[x].msg + '</p>';
-                    message.textContent = 'Psspl' + ":" + data[x].msg; //data[x].msgTo (for Name)
-                    messages.appendChild(message);
-                    messages.insertAfter(message, messages.firstChild);
+                    //message.textContent = 'Psspl' + ":" + data[x].msg; //data[x].msgTo (for Name)
+                    message.textContent = data[x].msg; //data[x].msgTo (for Name)
+                    messages.append(message);
+                    //messages.insertAfter(message, messages.firstChild);
+
+                    jQuery(".custom-scroll").mCustomScrollbar("update");
                     //    $messages.html(html)
                     // html += '<li class="list-group-item">' + data[i] + '</li>';
                 }
@@ -261,12 +277,15 @@
         socket.on('all messages', function (data) {
             if ((data.length) && (data[0].Name == $('#NameChat').val()) && (data[0].msg != undefined)) {
                 for (var x = 0; x < data.length; x++) {
+                    //debugger
                     // Build out message div
                     var message = document.createElement('div');
-                    message.setAttribute('class', 'user-message');
-                    message.textContent = 'Me' + ": " + data[x].msg;
-                    messages.appendChild(message);
-                    messages.insertAfter(message, messages.firstChild);
+                    message.setAttribute('class', 'msg-block user-message');
+                    //message.textContent = 'Me' + ": " + data[x].msg;
+                    message.textContent = data[x].msg;
+                    messages.append(message);
+                    jQuery(".custom-scroll").mCustomScrollbar("update");
+                    //messages.insertAfter(message, messages.firstChild);
                 }
             }
         });
@@ -353,7 +372,12 @@
                 to = 'vishal.matthar@prakashinfotech.com';
                 subject = 'New user for chat';
                 text = 'http://localhost:4000/admin';
-                $.get("/send", { from: from, to: to, subject: subject, text: text }, function (data) {
+                $.get("/send", {
+                    from: from,
+                    to: to,
+                    subject: subject,
+                    text: text
+                }, function (data) {
                     if (data == "sent") {
                         //   $("#message").empty().html("<p>Email is been sent at " + to + " . Please check inbox !</p>");
                     }
@@ -375,6 +399,16 @@
         }
 
         //#endregion
+
+        $(document).ready(function () {
+            $('.btn-theme-change').click(function () {
+                $('body').toggleClass('light').toggleClass('dark');
+            })
+
+            // $(".custom-scroll").mCustomScrollbar({
+            //     theme: "dark"
+            // });
+        })
     </script>
 </body>
 

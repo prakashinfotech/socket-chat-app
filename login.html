@@ -1,86 +1,124 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="/custom.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <link rel="stylesheet" type="text/css" href="css/theme.css">
+    <script src="js/jquery-latest.min.js"></script>
     <script src="http://localhost:4000/socket.io/socket.io.js"></script>
 
     <!-- <script src="http://52.173.20.11:4000/socket.io/socket.io.js"></script> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="windows-1252">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+    <script src="js/jquery.validate.js"></script>
 </head>
 
-<body>
-    <div>
-        <div id="loginForm">
-            <form id="LoginForm">
-                <h2 id="titleLoginPage" style="margin-bottom: 50px;margin-left: 100px;  color:goldenrod">Login</h2>
-
-                <div class="">
-                    <label class="font-weight-bold text-justify">User Name</label>
-                    <input type="text" class="" name="username" id="username" onblur="invalidMessageDisplay()"
-                        onchange="invalidMessageDisplay()" onkeydown="invalidMessageDisplay()"
-                        placeholder="* Enter User Name" required>
+<body class="login-bg dark">
+    <div class="container h-100">
+        <div class="d-flex row justify-content-between h-100">
+            <div class="col">
+                <div class="txt-tag-line">
+                    <p class="mb-5">Don’t make customers happy. <br />Make happy customers!</p>
+                    <small>Dharmesh Shah, HubSpot Inc</small>
                 </div>
-                <div class="">
-                    <label class="font-weight-bold text-justify">Password</label>
-                    <input type="password" class="" name="password" id="password" onblur="invalidMessageDisplay()"
-                        onchange="invalidMessageDisplay()" onkeydown="invalidMessageDisplay()"
-                        placeholder="* Enter Password" required>
+            </div>
+            <div class="shadow-sm p-2 p-lg-4 login-block col-lg-5">
+                <div id="loginForm">
+                    <form id="LoginForm" class="mt-5">
+                        <h1 class="chatTitle">Customer Support <br />Chat Service</h1>
 
+                        <div
+                            class="d-flex justify-content-between align-items-center border-bottom border-dark pb-3 mb-3">
+                            <h3 class="m-0">Login</h3>
+                            <div>
+                                <label class="mb-0">New User?</label>
+                                <a href="javascript:void(0);" class="text-danger text-uppercase"
+                                    onclick="registerForm()">Register</a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>User Name</label>
+                            <input type="text" class="form-control" name="username" id="username"
+                                onblur="invalidMessageDisplay()" onchange="invalidMessageDisplay()"
+                                onkeydown="invalidMessageDisplay()" placeholder="* Enter User Name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="">Password</label>
+                            <input type="password" class="form-control" name="password" id="password"
+                                onblur="invalidMessageDisplay()" onchange="invalidMessageDisplay()"
+                                onkeydown="invalidMessageDisplay()" placeholder="* Enter Password" required>
+
+                        </div>
+
+                        <p class="errorIfInvalIdInput" id="invalid">Invalid credentials</p>
+                        <div class="d-flex justify-content-between">
+                            <button type="button" id="reset" class="btn btn-link text-danger mr-3">Reset Password</button>
+                            <button type="submit" id="vi" class="btn btn-outline-danger">Login</button>
+                        </div>
+
+                    </form>
                 </div>
-                <p class="errorIfInvalIdInput" id="invalid">Invalid credentials</p>
-                <br />
-                <button type="submit" id="vi" class="btn btn-success">Login</button>
-                <button type="button" id="reset" class="btn btn-danger mr-3">Reset</button>
-                <button type="button" id="reg" class="btn btn-primary mr-3" onclick="registerForm()">Register</button>
+                <div id="regiForm" class="mt-5">
+                    <form id="RegiForm">
+                        <h1 class="chatTitle">Customer Support <br />Chat Service</h1>
 
-            </form>
+                        <div
+                            class="d-flex justify-content-between align-items-center border-bottom border-dark pb-3 mb-3">
+                            <h3 class="m-0">Register</h3>
+                            <div>
+                                <label class="mb-0">Existing User? </label>
+                                <a href="javascript:void(0);" class="text-danger text-uppercase"
+                                    onclick="cancelbtn()">Login</a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>User Name</label>
+                            <input type="text" class="form-control" name="regiUsername" id="regiUsername"
+                                placeholder="* Enter User Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control" name="regiPassword" id="regiPassword"
+                                placeholder="* Enter Password" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Role</label>
+                            <div>
+                                <div class="custom-control custom-radio radio-danger custom-control-inline">
+                                    <input type="radio" name="role" class="custom-control-input" id="admin"
+                                        value="admin">
+                                    <label class="custom-control-label" for="admin">Admin</label>
+                                </div>
+
+                                <div class="custom-control custom-radio radio-danger custom-control-inline">
+                                    <input type="radio" name="role" class="custom-control-input" id="guest"
+                                        value="guest">
+                                    <label class="custom-control-label" for="guest">Guest</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="button" id="regiReset" class="btn btn-link text-danger">CANCEL</button>
+                            <button type="button" id="regForm" class="btn btn-outline-danger"
+                                onclick="register()">REGISTER</button>
+                    </form>
+                </div>
+            </div>
         </div>
 
-        <div id="regiForm">
-            <form id="RegiForm">
-                <h2 id="titleLoginPage" style="margin-bottom: 50px;margin-left: 100px;  color:goldenrod">Register</h2>
 
-                <div class="">
-                    <label class="font-weight-bold text-justify">User Name</label>
-                    <input type="text" class="" name="regiUsername" id="regiUsername" placeholder="* Enter User Name"
-                        required>
-                </div>
-                <div class="">
-                    <label class="font-weight-bold text-justify">Password</label>
-                    <input type="password" class="" name="regiPassword" id="regiPassword" placeholder="* Enter Password"
-                        required>
-
-                </div>
-
-                <div class="">
-                    <label>Role</label>
-                    <div>
-                        <label class="radioButton"> <input type="radio" name="role" id="role"
-                                value="admin">Admin</label>
-                        <label class="radioButton"> <input type="radio" name="role" id="role"
-                                value="guest">Guest</label>
-                    </div>
-                </div>
-
-                <br />
-                <button type="button" id="regForm" class="btn btn-success mr-3" onclick="register()">Submit</button>
-                <button type="button" id="regiReset" class="btn btn-danger mr-3">Reset</button>
-                <button type="button" class="btn btn-primary mr-3" onclick="cancelbtn()">Cancel</button>
-
-            </form>
-        </div>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
         var socket = io.connect('http://localhost:4000');
 
-      //  var socket = io.connect('http://52.173.20.11:4000');
+        //  var socket = io.connect('http://52.173.20.11:4000');
         var $invalid = $('#invalid');
         var $username = $('#username');
 
@@ -165,7 +203,10 @@
                 username = $("#username").val();
                 password = $("#password").val();
 
-                $.post("/loginPage", { username: username, password: password }, function (data) {
+                $.post("/loginPage", {
+                    username: username,
+                    password: password
+                }, function (data) {
                     if (data === 'done') {
                         //window.location.href = "/admin";
                     }
@@ -198,7 +239,8 @@
         socket.on('get users', function (data) {
             var html = '';
             for (i = 0; i < data.length; i++) {
-                html += '<li class="list-group-item" data-socketId=' + data[i].Id + '>' + data[i].Name + '</li>';
+                html += '<li class="list-group-item" data-socketId=' + data[i].Id + '>' + data[i].Name +
+                    '</li>';
             }
             //$users.html(html)
         });
@@ -256,7 +298,6 @@
         }
 
         //#endregion
-
     </script>
 </body>
 

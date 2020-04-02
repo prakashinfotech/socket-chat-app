@@ -22,8 +22,8 @@ users = [];
 connections = [];
 history = [];
 
-//mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatform', { useUnifiedTopology: true }, function (err, db) { //for azure DB
-  mongo.connect('mongodb://127.0.0.1/mongochatform', { useUnifiedTopology: true }, function (err, db) {   //for run in local db
+mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatform', { useUnifiedTopology: true }, function (err, db) { //for azure DB
+//mongo.connect('mongodb://localhost/mongochatform', { useUnifiedTopology: true }, function (err, db) {   //for run in local db
 
   //mongo.connect('mongodb+srv://vishal:12345@cluster0-ypqy8.azure.mongodb.net/test?retryWrites=true&w=majority', function (err, db) {
   // mongo.connect("mongodb://chatdbacc:s9fSQXscvwKCsCIBxYzhb2VfCoGXDBmOeZHp91i2jCfiJsC5mlEYKwzSjAKw3C2Wi4DqNngqskhVMtCJKxFxNw==@chatdbacc.documents.azure.com:10250/mean?ssl=true", function (err, db) {
