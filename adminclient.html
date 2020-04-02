@@ -230,7 +230,7 @@
     messagess = []
     allMessages = [];
 
-     var socket = io.connect('http://localhost:4000');
+    var socket = io.connect('http://localhost:4000');
     //var socket = io.connect('http://52.173.20.11:4000');
     var $Name = $('#Name');
     var $users = $('#users');
@@ -420,9 +420,11 @@
                     if (i[x].msgTo == $('#PName').val()) {
                         var message = document.createElement('div');
                         message.setAttribute('class', 'admin-message2');
-                        message.textContent = 'Psspl TO' + ' ' + i[x].msgTo + ":" + i[x].msg;
-                        messages2.appendChild(message);
-                        messages2.insertBefore(message, messages2.firstChild);
+                        // message.textContent = 'Psspl TO' + ' ' + i[x].msgTo + ":" + i[x].msg;
+                        message.textContent = 'Psspl' + ' ' + ":" + i[x].msg;
+
+                        messages.appendChild(message);
+                        messages.insertBefore(message, messages2.firstChild);
                     }
                 }
             });
