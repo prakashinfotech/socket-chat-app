@@ -441,6 +441,15 @@
 
     //#endregion
 
+
+    socket.on('userAgentMessages', function (data) {
+
+        if (data.length) {
+            console.log(data, 'allmessage')
+        }
+
+    });
+
     //#region  Onlick for Li message display and open chat box
 
     $(document).ready(function () {
