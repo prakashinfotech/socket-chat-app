@@ -289,7 +289,7 @@
     var $Name = $('#Name');
     var $users = $('#users');
     var $messages = $('#messages')
-   // var $messages2 = $('#messages2')
+    // var $messages2 = $('#messages2')
     var $clearChat = $('#clearChat')
 
     //#endregion
@@ -445,7 +445,7 @@
                 message.setAttribute('class', 'admin-message2');
                 message.textContent = 'Psspl ' + ' ' + ":" + data[x].msg;
                 messages.appendChild(message);
-                messages.insertBefore(message, messages2.firstChild);
+                messages.insertBefore(message, messages.firstChild);
             }
         }
     });
@@ -478,7 +478,7 @@
                         message.textContent = 'Psspl' + ' ' + ":" + i[x].msg;
 
                         messages.appendChild(message);
-                        messages.insertBefore(message, messages2.firstChild);
+                        messages.insertBefore(message, messages.firstChild);
                     }
                 }
             });
