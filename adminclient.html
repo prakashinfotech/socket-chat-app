@@ -424,7 +424,8 @@
     socket.on('output pmessages', function (data) {
 
         if (data.length) {
-            adminMessages.push(data);
+            var newArray = data.sort((a, b) => (a.timestamps > b.timestamps) ? 1 : -1)
+            adminMessages.push(newArray);
 
             for (var x = 0; x < data.length; x++) {
                 var message = document.createElement('div');
