@@ -62,7 +62,7 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
 
     });
 
-    chats.find().limit(1000).sort({ _id: 1 }).toArray(function (err, res) {
+    chats.find().limit(1000).sort({ 'timestamps': -1 }).toArray(function (err, res) {
       if (err) {
         throw err;
       }
@@ -71,7 +71,7 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
 
     });
 
-    chat.find().toArray(function (err, res) {
+    chat.find().sort({ 'timestamps': -1 }).toArray(function (err, res) {
       if (err) {
         throw err;
       }
@@ -80,7 +80,7 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
       //   io.emit('all messages', res);
     });
 
-    userMessages.find().toArray(function (err, res) {
+    userMessages.find().sort({ 'timestamps': -1 }).toArray(function (err, res) {
       if (err) {
         throw err;
       }
@@ -172,11 +172,11 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
       let socketId = data.socketId
 
       // Insert message
-      chat.insert({ msg: msg, Name: Name, socketId: socketId }, function () {
+      chat.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: new Date() }, function () {
         io.emit('all messages', [data]);
 
       });
-      userMessages.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: new Date() });
+      userMessages.insert({ msg: msg, Name: Name, socketId: socketId });
     });
 
     //#endregion
