@@ -71,7 +71,7 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
 
     });
 
-    chat.find().sort({ 'timestamps': -1 }).toArray(function (err, res) {
+    chat.find().limit(1000).sort({ 'timestamps': -1 }).toArray(function (err, res) {
       if (err) {
         throw err;
       }
@@ -80,7 +80,7 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
       //   io.emit('all messages', res);
     });
 
-    userMessages.find().sort({ 'timestamps': -1 }).toArray(function (err, res) {
+    userMessages.find().limit(1000).sort({ 'timestamps': -1 }).toArray(function (err, res) {
       if (err) {
         throw err;
       }
