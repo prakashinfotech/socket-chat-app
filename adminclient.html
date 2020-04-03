@@ -6,7 +6,7 @@
     <link rel="shortcut icon" href="#" />
 
 
-    <!-- <script src="http://52.173.20.11:4000/socket.io/socket.io.js"></script> -->
+    <script src="http://52.173.20.11:4000/socket.io/socket.io.js"></script>
     <meta charset="windows-1252">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -17,7 +17,7 @@
     <script src="js/jquery.mCustomScrollbar.js"></script>
 
     <!-- <script src="http://127.0.0.1:4000/socket.io/socket.io.js"></script> -->
-    <script src="http://localhost:4000/socket.io/socket.io.js"></script>
+    <!-- <script src="http://localhost:4000/socket.io/socket.io.js"></script> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 
 
@@ -268,8 +268,8 @@
     messagess = []
     allMessages = [];
 
-    var socket = io.connect('http://localhost:4000');
-    //var socket = io.connect('http://52.173.20.11:4000');
+    // var socket = io.connect('http://localhost:4000');
+    var socket = io.connect('http://52.173.20.11:4000');
     var $Name = $('#Name');
     var $users = $('#users');
     var $messages = $('#messages')
@@ -309,7 +309,7 @@
 
     function temp() {
         socket.emit('new user', $Name.val(), function (data) {
-            if (data) {}
+            if (data) { }
         });
         $Name.val('');
     }
@@ -498,8 +498,8 @@
             theme: "dark"
         });
         $('#sidebarCollapse').on('click', function () {
-        $('.left-sidebar').toggleClass('active');
-    });
+            $('.left-sidebar').toggleClass('active');
+        });
     })
 
     //#endregion
