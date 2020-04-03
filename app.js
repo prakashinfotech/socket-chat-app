@@ -187,6 +187,7 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
       // Insert message
       chat.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: new Date() }, function () {
         io.emit('all messages', [data]);
+        io.emit('userAgentMessages', [data]);
 
       });
       userMessages.insert({ msg: msg, Name: Name, socketId: socketId });
@@ -238,6 +239,8 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
         // Insert message
         chats.insert({ msg: msg, msgTo: msgTo, toId: toId, timestamps: new Date() }, function () {
           io.emit('output pmessages', [data]);
+          io.emit('userAgentMessages', [data]);
+
           userAgentMessages.insert({ msg: msg, msgTo: msgTo, toId: toId, timestamps: new Date() })
         });
 

@@ -441,11 +441,13 @@
 
     //#endregion
 
-
+    customMessages = []
     socket.on('userAgentMessages', function (data) {
 
         if (data.length) {
             console.log(data, 'allmessage')
+            customMessages.push(data)
+
         }
 
     });
@@ -468,7 +470,33 @@
             $("#selectedUser").html(selectedName)
 
             document.getElementById("chatFormId").style.display = "block";
-            adminMessages.forEach(i => {
+            // adminMessages.forEach(i => {
+            //     for (var x = 0; x < i.length; x++) {
+            //         if (i[x].msgTo == $('#PName').val()) {
+            //             var message = document.createElement('div');
+            //             message.setAttribute('class', 'msg-block admin-message');
+            //             // message.textContent = 'Psspl TO' + ' ' + i[x].msgTo + ":" + i[x].msg;
+            //             message.textContent = 'Psspl' + ' ' + ":" + i[x].msg;
+
+            //             messages.appendChild(message);
+            //             // messages.insertAfter(message, messages.firstChild);
+            //         }
+            //     }
+            // });
+
+            // allMessages.forEach(i => {
+            //     for (var x = 0; x < i.length; x++) {
+            //         if (i[x].Name == selectedName) {
+            //             var message = document.createElement('div');
+            //             message.setAttribute('class', 'msg-block user-message');
+            //             message.textContent = i[x].Name + ": " + i[x].msg;
+            //             messages.appendChild(message);
+            //             //messages.insertAfter(message, messages.firstChild);
+            //         }
+            //     }
+            // });
+
+            customMessages.forEach(i => {
                 for (var x = 0; x < i.length; x++) {
                     if (i[x].msgTo == $('#PName').val()) {
                         var message = document.createElement('div');
@@ -478,13 +506,7 @@
 
                         messages.appendChild(message);
                         // messages.insertAfter(message, messages.firstChild);
-                    }
-                }
-            });
-
-            allMessages.forEach(i => {
-                for (var x = 0; x < i.length; x++) {
-                    if (i[x].Name == selectedName) {
+                    } else if (i[x].Name == selectedName) {
                         var message = document.createElement('div');
                         message.setAttribute('class', 'msg-block user-message');
                         message.textContent = i[x].Name + ": " + i[x].msg;
@@ -492,7 +514,8 @@
                         //messages.insertAfter(message, messages.firstChild);
                     }
                 }
-            });
+            })
+
 
             if (selectedName === localStorage.getItem('name')) {
                 $('#users li').removeClass('active');
