@@ -23,7 +23,7 @@ connections = [];
 history = [];
 
 mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatform', { useUnifiedTopology: true }, function (err, db) { //for azure DB
-//mongo.connect('mongodb://localhost/mongochatform', { useUnifiedTopology: true }, function (err, db) {   //for run in local db
+  //mongo.connect('mongodb://localhost/mongochatform', { useUnifiedTopology: true }, function (err, db) {   //for run in local db
 
   //mongo.connect('mongodb+srv://vishal:12345@cluster0-ypqy8.azure.mongodb.net/test?retryWrites=true&w=majority', function (err, db) {
   // mongo.connect("mongodb://chatdbacc:s9fSQXscvwKCsCIBxYzhb2VfCoGXDBmOeZHp91i2jCfiJsC5mlEYKwzSjAKw3C2Wi4DqNngqskhVMtCJKxFxNw==@chatdbacc.documents.azure.com:10250/mean?ssl=true", function (err, db) {
@@ -176,7 +176,7 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
         io.emit('all messages', [data]);
 
       });
-      userMessages.insert({ msg: msg, Name: Name, socketId: socketId });
+      userMessages.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: new Date() });
     });
 
     //#endregion
@@ -222,7 +222,7 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
         socket.join(data.msgTo, data.id);
 
         // Insert message
-        chats.insert({ msg: msg, msgTo: msgTo, toId: toId }, function () {
+        chats.insert({ msg: msg, msgTo: msgTo, toId: toId, timestamps: new Date() }, function () {
           io.emit('output pmessages', [data]);
 
         });
