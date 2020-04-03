@@ -31,7 +31,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            
+
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
                     <a class="nav-link" href="/admin">Chat</a>
@@ -64,7 +64,7 @@
         <h1 id="titleLoginPage" style="color:burlywood;margin-left: 150px;position: relative;">Welcome to Admin-Portal
         </h1>
     </strong>
-    
+
 
     <div class="container-fluid">
         <div class="row row-offcanvas row-offcanvas-left">
@@ -116,12 +116,46 @@
                                 </div>
                             </div>
                         </form>
+
+                        <form class="chat-form" id="chatFormId">
+                            <!-- <div id="admin"><b>Hey Admin, </b> <button type="button" class="cancelAdmin"
+                                    onclick="closeForm()">
+                                    <i class="fa fa fa-times" aria-hidden="true"></i>
+                                </button></div> -->
+                            <!-- <br />
+                            <label><b>To: </b></label>
+                            <br /> -->
+                            <input id="PName" type="hidden" name="PName" required />
+                            <br />
+                            <br />
+
+                            <!-- <div class="card2" id="userMessages2">
+                                <div id="messages2" class="card-block2">
+
+                                </div>
+                            </div> -->
+
+                            <label><b>Message: </b></label>
+                            <br />
+                            <textarea rows="2" id="msg" name="msg" placeholder="Type message.." required></textarea>
+                            <br />
+                            &nbsp;
+                            <br />
+                            <button type="button" id="msgsubmit" class="btn btn-success"
+                                onclick="privatemessage()">Send</button>
+
+                            <ul id="message">
+
+                            </ul>
+                            <!-- <button type="button" class="btn cancel btn-danger" onclick="closeForm()">Close</button> -->
+                        </form>
+
                     </div>
                 </div>
             </div>
             <br />
             <div>
-                <form class="chat-form" id="chatFormId">
+                <!-- <form class="chat-form" id="chatFormId">
                     <div id="admin"><b>Hey Admin, </b> <button type="button" class="cancelAdmin" onclick="closeForm()">
                             <i class="fa fa fa-times" aria-hidden="true"></i>
                         </button></div>
@@ -150,8 +184,8 @@
                     <ul id="message">
 
                     </ul>
-                    <!-- <button type="button" class="btn cancel btn-danger" onclick="closeForm()">Close</button> -->
-                </form>
+                  <button type="button" class="btn cancel btn-danger" onclick="closeForm()">Close</button> -->
+                <!-- </form>  -->
                 <!-- <button type="button" class="open-button" onclick="openForm()">Chat
 
                 </button> -->
@@ -289,7 +323,7 @@
 
     function temp() {
         socket.emit('new user', $Name.val(), function (data) {
-            if (data) {}
+            if (data) { }
         });
         $Name.val('');
     }
@@ -409,9 +443,9 @@
             for (var x = 0; x < data.length; x++) {
                 var message = document.createElement('div');
                 message.setAttribute('class', 'admin-message2');
-                message.textContent = 'Psspl to' + ' ' + data[x].msgTo + ":" + data[x].msg;
-                messages2.appendChild(message);
-                messages2.insertBefore(message, messages2.firstChild);
+                message.textContent = 'Psspl ' + ' ' + ":" + data[x].msg;
+                messages.appendChild(message);
+                messages.insertBefore(message, messages2.firstChild);
             }
         }
     });
