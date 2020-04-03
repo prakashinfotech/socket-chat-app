@@ -10,9 +10,11 @@
     <meta charset="windows-1252">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css//jquery.mCustomScrollbar.css" />
     <link rel="stylesheet" type="text/css" href="css/custom.css">
     <link rel="stylesheet" type="text/css" href="css/theme.css">
     <script src="js/jquery-latest.min.js"></script>
+    <script src="js/jquery.mCustomScrollbar.js"></script>
 
     <!-- <script src="http://127.0.0.1:4000/socket.io/socket.io.js"></script> -->
     <script src="http://localhost:4000/socket.io/socket.io.js"></script>
@@ -23,8 +25,8 @@
 
 </head>
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-0">
+<body class="light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparetn shadow-sm py-0">
         <h1 class="chatTitle border-0 py-2">Customer Support <br /> Chat Service</h1>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
             aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,6 +50,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/test1">Test</a>
                 </li>
+                <li class="nav-item">
+                    <button class="btn-theme-change btn btn-outline-info">Theme Change</button>
+                </li>
+
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -60,26 +66,36 @@
             </ul>
         </div>
     </nav>
-    <strong>
-        <h1 id="titleLoginPage" style="color:burlywood;margin-left: 150px;position: relative;">Welcome to Admin-Portal
-        </h1>
-    </strong>
+    <div class="d-flex">
+        <div class="left-sidebar">
+            <div id="forUsers">
+                <div class="d-flex justify-content-between align-items-center pr-3 mb-3 py-3 border-bottom">
+                    <h5 class="mb-0">Open Chat</h5>
+                    <span class="badge badge-danger"> 12</span>
+                </div>
+                <div class="inner pb-4 custom-scroll flex-fill">
+                    <ul class="user-list" id="users">
 
 
-    <div class="container-fluid">
-        <div class="row row-offcanvas row-offcanvas-left">
-            <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-                <div class="sidebar-nav">
-                    <ul class="nav">
-
-                        <!-- <li><a href="#" onclick="userNameForm()">Admin Name</a></li>
-                        <li><a href="#" onclick="onlineUsers()">Online Users</a></li>
-                        <li><a href="#" onclick="userMessages()">User Message</a></li> -->
                     </ul>
                 </div>
             </div>
+        </div>
+        <div class="flex-fill">
+            <div class="container-fluid">
 
-            <div class="container">
+                <!-- <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+                <div class="sidebar-nav">
+                    <ul class="nav">
+
+                        <li><a href="#" onclick="userNameForm()">Admin Name</a></li>
+                        <li><a href="#" onclick="onlineUsers()">Online Users</a></li>
+                        <li><a href="#" onclick="userMessages()">User Message</a></li> 
+                    </ul>
+                </div>
+            </div> -->
+
+
                 <!-- <div class="row" id="userFormArea">
                     <div class="col-md-6">
                         <form id="userForm">
@@ -93,31 +109,41 @@
                         </form>
                     </div>
                 </div> -->
-                <br />
-                <br />
+
+
+
                 <div id="messageArea" class="row">
-                    <div class="col-md-4">
-                        <div class="well" id="forUsers">
-                            <h3>Users</h3>
-                            <ul class="list-group" id="users">
+                    <div class="col-md-8 mt-3">
+                        <!-- <div class="chat p-2" id="chat"></div> -->
+                        <form id="messageForm" class="mb-0">
+                            <div class="p-3 rounded d-flex bg mb-3 justify-content-between align-items-center">
+                                <button type="button" id="sidebarCollapse" class="btn navbar-light">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <button class="btn btn-outline-danger" id="clearChat">Clear</button>
+                            </div>
 
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="chat" id="chat"></div>
-                        <form id="messageForm">
-                            <button class="btn btn-danger" id="clearChat">Clear</button>
-
-                            <div class="card" id="userMessages">
-
-                                <div id="messages" class="card-block">
-
+                            <div class="clearfix bg rounded-top" id="userMessages">
+                                <div class="d-flex p-3 pb-3 mb-3 border-bottom">
+                                    <div class="img-block mr-3">
+                                        <img src="img/user-img.png" width="90" />
+                                    </div>
+                                    <div class="user-details">
+                                        <h4 class="mb-1" id="selectedUser"></h4>
+                                        <p class="mb-0">9785698548</p>
+                                        <p class="mb-0">jenna.bourland@gmail.com</p>
+                                    </div>
+                                </div>
+                                <div class="message-outer-block">
+                                    <div class="message-inner-block custom-scroll">
+                                        <div id="messages" class="clearfix  p-3">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>
 
-                        <form class="chat-form" id="chatFormId">
+                        <form class="chat-form mb-0" id="chatFormId">
                             <!-- <div id="admin"><b>Hey Admin, </b> <button type="button" class="cancelAdmin"
                                     onclick="closeForm()">
                                     <i class="fa fa fa-times" aria-hidden="true"></i>
@@ -126,69 +152,27 @@
                             <label><b>To: </b></label>
                             <br /> -->
                             <input id="PName" type="hidden" name="PName" required />
-                            <br />
-                            <br />
-
                             <!-- <div class="card2" id="userMessages2">
                                 <div id="messages2" class="card-block2">
 
                                 </div>
                             </div> -->
+                            <div class="d-flex p-3 bottom-block rounded-bottom">
+                                <div class="flex-fill mr-3">
+                                    <textarea rows="2" id="msg" name="msg" class="form-control"
+                                        placeholder="Type message.." required></textarea>
+                                </div>
+                                <button type="button" id="msgsubmit" class="btn btn-outline-danger px-2"
+                                    onclick="privatemessage()">Send</button>
+                            </div>
 
-                            <label><b>Message: </b></label>
-                            <br />
-                            <textarea rows="2" id="msg" name="msg" placeholder="Type message.." required></textarea>
-                            <br />
-                            &nbsp;
-                            <br />
-                            <button type="button" id="msgsubmit" class="btn btn-success"
-                                onclick="privatemessage()">Send</button>
 
-                            <ul id="message">
-
-                            </ul>
+                            <!-- <ul id="message"></ul> -->
                             <!-- <button type="button" class="btn cancel btn-danger" onclick="closeForm()">Close</button> -->
                         </form>
 
                     </div>
                 </div>
-            </div>
-            <br />
-            <div>
-                <!-- <form class="chat-form" id="chatFormId">
-                    <div id="admin"><b>Hey Admin, </b> <button type="button" class="cancelAdmin" onclick="closeForm()">
-                            <i class="fa fa fa-times" aria-hidden="true"></i>
-                        </button></div>
-                    <br />
-                    <label><b>To: </b></label>
-                    <br />
-                    <input id="PName" type="hidden" name="PName" required />
-                    <br />
-                    <br />
-
-                    <div class="card2" id="userMessages2">
-                        <div id="messages2" class="card-block2">
-
-                        </div>
-                    </div>
-
-                    <label><b>Message: </b></label>
-                    <br />
-                    <textarea rows="2" id="msg" name="msg" placeholder="Type message.." required></textarea>
-                    <br />
-                    &nbsp;
-                    <br />
-                    <button type="button" id="msgsubmit" class="btn btn-success"
-                        onclick="privatemessage()">Send</button>
-
-                    <ul id="message">
-
-                    </ul>
-                  <button type="button" class="btn cancel btn-danger" onclick="closeForm()">Close</button> -->
-                <!-- </form>  -->
-                <!-- <button type="button" class="open-button" onclick="openForm()">Chat
-
-                </button> -->
             </div>
         </div>
     </div>
@@ -314,8 +298,10 @@
 
         var html = '';
         for (i = 0; i < data.length; i++) {
-            html += '<li class="list-group-item" data-socketId=' + data[i].Id + '>' + data[i].Name +
-                '<i class="fa fa-circle status"></i>' + '</li>';
+            html +=
+                '<li class="d-flex d-flex justify-content-between pr-3 align-items-center mb-3" data-socketId=' +
+                data[i].Id + '><div><img src="img/user-img.png" class="mr-2" width="35" />' + data[i].Name +
+                '</div><i class="fa fa-circle status"></i>' + '</li>';
         }
         $users.html(html)
 
@@ -323,7 +309,7 @@
 
     function temp() {
         socket.emit('new user', $Name.val(), function (data) {
-            if (data) { }
+            if (data) {}
         });
         $Name.val('');
     }
@@ -408,7 +394,7 @@
             for (var x = 0; x < data.length; x++) {
                 // Build out message div
                 var message = document.createElement('div');
-                message.setAttribute('class', 'chat-message');
+                message.setAttribute('class', 'msg-block user-message');
                 message.textContent = data[x].Name + ": " + data[x].msg;
                 messages.appendChild(message);
                 messages.insertBefore(message, messages.firstChild);
@@ -442,7 +428,7 @@
 
             for (var x = 0; x < data.length; x++) {
                 var message = document.createElement('div');
-                message.setAttribute('class', 'admin-message2');
+                message.setAttribute('class', 'msg-block admin-message');
                 message.textContent = 'Psspl ' + ' ' + ":" + data[x].msg;
                 messages.appendChild(message);
                 messages.insertBefore(message, messages.firstChild);
@@ -467,13 +453,14 @@
 
             var selectedName = $(e.currentTarget).text();
             $("#PName").val(selectedName)
+            $("#selectedUser").html(selectedName)
 
             document.getElementById("chatFormId").style.display = "block";
             adminMessages.forEach(i => {
                 for (var x = 0; x < i.length; x++) {
                     if (i[x].msgTo == $('#PName').val()) {
                         var message = document.createElement('div');
-                        message.setAttribute('class', 'admin-message2');
+                        message.setAttribute('class', 'msg-block admin-message');
                         // message.textContent = 'Psspl TO' + ' ' + i[x].msgTo + ":" + i[x].msg;
                         message.textContent = 'Psspl' + ' ' + ":" + i[x].msg;
 
@@ -487,7 +474,7 @@
                 for (var x = 0; x < i.length; x++) {
                     if (i[x].Name == selectedName) {
                         var message = document.createElement('div');
-                        message.setAttribute('class', 'chat-message');
+                        message.setAttribute('class', 'msg-block user-message');
                         message.textContent = i[x].Name + ": " + i[x].msg;
                         messages.appendChild(message);
                         messages.insertBefore(message, messages.firstChild);
@@ -502,6 +489,18 @@
             }
         })
     });
+    $(document).ready(function () {
+        $('.btn-theme-change').click(function () {
+            $('body').toggleClass('light').toggleClass('dark');
+        })
+
+        $(".custom-scroll").mCustomScrollbar({
+            theme: "dark"
+        });
+        $('#sidebarCollapse').on('click', function () {
+        $('.left-sidebar').toggleClass('active');
+    });
+    })
 
     //#endregion
 </script>

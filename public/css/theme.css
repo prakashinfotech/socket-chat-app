@@ -1,13 +1,24 @@
 /* Theme CSS */
 
-body.light {
+body.light, .light .navbar-light .navbar-nav .nav-link {
     color: #303030;
 }
 
-body.dark {
+body.dark, .dark .navbar-light .navbar-nav .nav-link {
     color: #fff;
 }
-
+body.light{
+    background-color: #F2F3F8;
+}
+body.dark{
+    background-color: #2A2D31;
+}
+.light .bg{
+    background: #fff;
+}
+.dark .bg{
+    background: #34393E;
+}
 .dark .open-button {
     background-color: #34393E;
     color: #fff;
@@ -42,16 +53,18 @@ body.dark {
 }
 
 .dark .msg-block.admin-message {
-    background: #363b41;
-    border-color: #363b41;
+    background: #595d63;
+    border-color: #595d63;
 }
 
 .light .msg-block.admin-message {
     background: #f8f9fb;
     border-color: #f8f9fb;
 }
-
-.dark .chat-popup .bottom-block {
+.light .bottom-block {
+    background: #F7F9FA;
+}
+.dark .bottom-block {
     background: #545a61;
 }
 
@@ -81,3 +94,11 @@ body.dark {
 .dark .login-block {
     background: rgba(42, 45, 49, 0.5);
 }
+.light .navbar{
+    background: #fff;
+}
+.dark .navbar{
+    background:#34393E;
+}
+.light .left-sidebar{background: #fff;}
+.dark .left-sidebar{background: #34393E;}
