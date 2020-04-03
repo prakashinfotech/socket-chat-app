@@ -2,7 +2,9 @@
     outline: none !important;
     box-shadow: none !important;
 }
-
+body{
+    background-color: #F2F3F8;
+}
 body label {
     font-weight: 400;
 }
@@ -78,6 +80,7 @@ body label {
     width: 30px;
     display: block;
     padding: 0;
+    font-weight: bold;
 }
 
 label.error {

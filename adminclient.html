@@ -2,50 +2,69 @@
 
 <head>
     <title>Admin Portal</title>
-    <link rel="stylesheet" type="text/css" href="/custom.css">
+
     <link rel="shortcut icon" href="#" />
-    <!-- <script src="http://127.0.0.1:4000/socket.io/socket.io.js"></script> -->
-    <script src="http://localhost:4000/socket.io/socket.io.js"></script>
+
 
     <!-- <script src="http://52.173.20.11:4000/socket.io/socket.io.js"></script> -->
     <meta charset="windows-1252">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <link rel="stylesheet" type="text/css" href="css/theme.css">
+    <script src="js/jquery-latest.min.js"></script>
+
+    <!-- <script src="http://127.0.0.1:4000/socket.io/socket.io.js"></script> -->
+    <script src="http://localhost:4000/socket.io/socket.io.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+
+
+    <script src="js/jquery.validate.js"></script>
 
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-0">
+        <h1 class="chatTitle border-0 py-2">Customer Support <br /> Chat Service</h1>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin">Chat</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/">User Screen</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/test1">Test</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <span class="nav-link" id="hello"></span>
+                </li>
+                <li class="nav-item">
+                    <button type="button" class="btn px-0 btn-link text-danger" id="logout"
+                        onclick="logout()">Logout</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <strong>
         <h1 id="titleLoginPage" style="color:burlywood;margin-left: 150px;position: relative;">Welcome to Admin-Portal
         </h1>
-        <h2 style="color:burlywood;margin-left: 150px" id="hello"></h2>
     </strong>
-    <div class="navbar navbar-fixed-top navbar-default" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/admin">Chat</a>
-            </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="/admin">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="/">User Screen</a></li>
-                    <li><a href="/test1">Test</a></li>
-                    <button style="margin-top: 10px; margin-left: 1392px" type="button" class="btn btn-danger"
-                        id="logout" onclick="logout()">Logout</button>
-                </ul>
-            </div>
-        </div>
-    </div>
+    
 
     <div class="container-fluid">
         <div class="row row-offcanvas row-offcanvas-left">
@@ -53,15 +72,15 @@
                 <div class="sidebar-nav">
                     <ul class="nav">
 
-                        <li><a href="#" onclick="userNameForm()">Admin Name</a></li>
+                        <!-- <li><a href="#" onclick="userNameForm()">Admin Name</a></li>
                         <li><a href="#" onclick="onlineUsers()">Online Users</a></li>
-                        <li><a href="#" onclick="userMessages()">User Message</a></li>
+                        <li><a href="#" onclick="userMessages()">User Message</a></li> -->
                     </ul>
                 </div>
             </div>
 
             <div class="container">
-                <div class="row" id="userFormArea">
+                <!-- <div class="row" id="userFormArea">
                     <div class="col-md-6">
                         <form id="userForm">
                             <div class="form-group">
@@ -73,7 +92,7 @@
                             </div>
                         </form>
                     </div>
-                </div>
+                </div> -->
                 <br />
                 <br />
                 <div id="messageArea" class="row">
@@ -109,7 +128,7 @@
                     <br />
                     <label><b>To: </b></label>
                     <br />
-                    <input id="PName" name="PName" required />
+                    <input id="PName" type="hidden" name="PName" required />
                     <br />
                     <br />
 
@@ -133,9 +152,9 @@
                     </ul>
                     <!-- <button type="button" class="btn cancel btn-danger" onclick="closeForm()">Close</button> -->
                 </form>
-                <button type="button" class="open-button" onclick="openForm()">Chat
-                    <i class="fa fa-comments-o" aria-hidden="true"></i>
-                </button>
+                <!-- <button type="button" class="open-button" onclick="openForm()">Chat
+
+                </button> -->
             </div>
         </div>
     </div>
@@ -143,7 +162,6 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-
     //#region Admin name bind
 
     document.getElementById("hello").innerHTML = 'Hello ' + localStorage.getItem('name');
@@ -172,6 +190,7 @@
     function openForm() {
         document.getElementById("chatFormId").style.display = "block";
     }
+
     function closeForm() {
         document.getElementById("chatFormId").style.display = "none";
     }
@@ -188,6 +207,7 @@
         document.getElementById("clearChat").style.display = "block";
         document.getElementById("userForm").style.display = "none";
     }
+
     function userNameForm() {
         document.getElementById("userForm").style.display = "block";
         document.getElementById("forUsers").style.display = "none";
@@ -260,7 +280,8 @@
 
         var html = '';
         for (i = 0; i < data.length; i++) {
-            html += '<li class="list-group-item" data-socketId=' + data[i].Id + '>' + data[i].Name + '<i class="fa fa-circle status"></i>' + '</li>';
+            html += '<li class="list-group-item" data-socketId=' + data[i].Id + '>' + data[i].Name +
+                '<i class="fa fa-circle status"></i>' + '</li>';
         }
         $users.html(html)
 
@@ -268,8 +289,7 @@
 
     function temp() {
         socket.emit('new user', $Name.val(), function (data) {
-            if (data) {
-            }
+            if (data) {}
         });
         $Name.val('');
     }
@@ -450,7 +470,6 @@
     });
 
     //#endregion
-
 </script>
 
 </html>
