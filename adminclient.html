@@ -388,21 +388,21 @@
 
     //#region Display User Messages
 
-    // socket.on('all messages', function (data) {
-    //     if (data.length) {
-    //         var newArray = data.sort((a, b) => (a.timestamps > b.timestamps) ? 1 : -1)
+    socket.on('all messages', function (data) {
+        if (data.length) {
+            var newArray = data.sort((a, b) => (a.timestamps > b.timestamps) ? 1 : -1)
 
-    //         allMessages.push(data);
-    //         for (var x = 0; x < data.length; x++) {
-    //             // Build out message div
-    //             var message = document.createElement('div');
-    //             message.setAttribute('class', 'msg-block user-message');
-    //             message.textContent = data[x].Name + ": " + data[x].msg;
-    //             messages.appendChild(message);
-    //             // messages.insertAfter(message, messages.firstChild);
-    //         }
-    //     }
-    // });
+            allMessages.push(data);
+            for (var x = 0; x < data.length; x++) {
+                // Build out message div
+                var message = document.createElement('div');
+                message.setAttribute('class', 'msg-block user-message');
+                message.textContent = data[x].Name + ": " + data[x].msg;
+                messages.appendChild(message);
+                // messages.insertAfter(message, messages.firstChild);
+            }
+        }
+    });
 
     //#endregion
 
@@ -423,21 +423,21 @@
 
     //#region  Display Admin Message
 
-    // socket.on('output pmessages', function (data) {
+    socket.on('output pmessages', function (data) {
 
-    //     if (data.length) {
-    //         var newArray = data.sort((a, b) => (a.timestamps > b.timestamps) ? 1 : -1)
-    //         adminMessages.push(data);
+        if (data.length) {
+            var newArray = data.sort((a, b) => (a.timestamps > b.timestamps) ? 1 : -1)
+            adminMessages.push(data);
 
-    //         for (var x = 0; x < data.length; x++) {
-    //             var message = document.createElement('div');
-    //             message.setAttribute('class', 'msg-block admin-message');
-    //             message.textContent = 'Psspl ' + ' ' + ":" + data[x].msg;
-    //             messages.appendChild(message);
-    //             //  messages.insertAfter(message, messages.firstChild);
-    //         }
-    //     }
-    // });
+            for (var x = 0; x < data.length; x++) {
+                var message = document.createElement('div');
+                message.setAttribute('class', 'msg-block admin-message');
+                message.textContent = 'Psspl ' + ' ' + ":" + data[x].msg;
+                messages.appendChild(message);
+                //  messages.insertAfter(message, messages.firstChild);
+            }
+        }
+    });
 
     //#endregion
 
