@@ -392,7 +392,7 @@
         if (data.length) {
             var newArray = data.sort((a, b) => (a.timestamps > b.timestamps) ? 1 : -1)
 
-            allMessages.push(newArray);
+            allMessages.push(data);
             for (var x = 0; x < data.length; x++) {
                 // Build out message div
                 var message = document.createElement('div');
@@ -427,7 +427,7 @@
 
         if (data.length) {
             var newArray = data.sort((a, b) => (a.timestamps > b.timestamps) ? 1 : -1)
-            adminMessages.push(newArray);
+            adminMessages.push(data);
 
             for (var x = 0; x < data.length; x++) {
                 var message = document.createElement('div');
