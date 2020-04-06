@@ -457,7 +457,7 @@
     socket.on('output', function (data) {
 
         if (data.length) {
-            console.log(data, 'allmessage')
+            // console.log(data, 'allmessage')
             allUserInformation.push(data)
         }
 
@@ -482,6 +482,7 @@
             $("#selectedUser").html(selectedName)
 
             allUserInformation.forEach(element => {
+                console.log(element, 'element')
                 if (element.Name == selectedName) {
                     $("#userPhone").html(element.Number)
                     $("#userEmail").html(element.Email)
