@@ -484,8 +484,8 @@
             allUserInformation.forEach(element => {
                 console.log(element, 'element')
                 if (element.Name == selectedName) {
-                    $("#userPhone").html(element.Number)
-                    $("#userEmail").html(element.Email)
+                    $("#userPhone").html(element[0].Number)
+                    $("#userEmail").html(element[0].Email)
 
 
                 }
