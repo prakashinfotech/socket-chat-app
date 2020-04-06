@@ -130,8 +130,8 @@
                                     </div>
                                     <div class="user-details">
                                         <h4 class="mb-1" id="selectedUser"></h4>
-                                        <p class="mb-0">9785698548</p>
-                                        <p class="mb-0">jenna.bourland@gmail.com</p>
+                                        <p class="mb-0" id="userPhone">9785698548</p>
+                                        <p class="mb-0" id="userEmail">jenna.bourland@gmail.com</p>
                                     </div>
                                 </div>
                                 <div class="message-outer-block">
@@ -452,6 +452,18 @@
 
     });
 
+
+    allUserInformation = []
+    socket.on('output', function (data) {
+
+        if (data.length) {
+            console.log(data, 'allmessage')
+            allUserInformation.push(data)
+        }
+
+    });
+
+
     //#region  Onlick for Li message display and open chat box
 
     $(document).ready(function () {
@@ -468,6 +480,16 @@
             var selectedName = $(e.currentTarget).text();
             $("#PName").val(selectedName)
             $("#selectedUser").html(selectedName)
+
+            allUserInformation.forEach(element => {
+                if (element.Name == selectedName) {
+                    $("#userPhone").html(element.Number)
+                    $("#userEmail").html(element.Email)
+
+
+                }
+
+            });
 
             document.getElementById("chatFormId").style.display = "block";
             // adminMessages.forEach(i => {
