@@ -500,7 +500,7 @@
         $(document).on('click', '#users li', (e) => {
             $("#messages").empty();
             $("#messages2").empty();
-            $("#msg").empty();
+            $("#msg").html('');
             $('#users li').removeClass('active');
             $(e.currentTarget).addClass('active');
 
