@@ -582,7 +582,7 @@
 
         });
 
-        $('#msgbox').keypress((e) => {
+        $('#msg').keypress((e) => {
             if (e.which != 13) {
                 typing = true
                 socket.emit('typing', { user: user, typing: true })
