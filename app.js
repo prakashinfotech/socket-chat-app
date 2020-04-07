@@ -253,13 +253,16 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
 
     //typing
 
-    socket.on('typing', (data) => {
-      if (data.typing == true)
-        io.emit('display', data)
-      else
-        io.emit('display', data)
-    })
-
+    // socket.on('typing', (data) => {
+    //   if (data.typing == true)
+    //     io.emit('display', data)
+    //   else
+    //     io.emit('display', data)
+    // })
+    socket.on('typing', function (data) {
+      // console.log(data);
+      socket.broadcast.emit('typing', data);
+    });
 
 
 
