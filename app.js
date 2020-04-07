@@ -251,6 +251,18 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
 
     //#endregion
 
+    //typing
+
+    socket.on('typing', (data) => {
+      if (data.typing == true)
+        io.emit('display', data)
+      else
+        io.emit('display', data)
+    })
+
+
+
+
     //#region  Delete record
 
     socket.on('clear', function (data) {

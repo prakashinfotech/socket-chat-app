@@ -399,7 +399,7 @@
                 message.setAttribute('class', 'msg-block user-message');
                 message.textContent = data[x].Name + ": " + data[x].msg;
                 messages.appendChild(message);
-                $(".custom-scroll").mCustomScrollbar("scrollTo","bottom",{scrollInertia:0}); 
+                $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 0 });
                 // messages.insertAfter(message, messages.firstChild);
             }
         }
@@ -435,7 +435,7 @@
                 message.setAttribute('class', 'msg-block admin-message');
                 message.textContent = 'Psspl ' + ' ' + ":" + data[x].msg;
                 messages.appendChild(message);
-                $(".custom-scroll").mCustomScrollbar("scrollTo","bottom",{scrollInertia:0}); 
+                $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 0 });
                 //  messages.insertAfter(message, messages.firstChild);
             }
         }
@@ -531,7 +531,7 @@
                         message.textContent = 'Psspl' + ' ' + ":" + i[x].msg;
 
                         messages.appendChild(message);
-                        $(".custom-scroll").mCustomScrollbar("scrollTo","bottom",{scrollInertia:0}); 
+                        $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 0 });
                         // messages.insertAfter(message, messages.firstChild);
                     } else if (i[x].Name == selectedName) {
                         var message = document.createElement('div');
@@ -539,7 +539,7 @@
                         message.textContent = i[x].Name + ": " + i[x].msg;
                         messages.appendChild(message);
                         //messages.insertAfter(message, messages.firstChild);
-                        $(".custom-scroll").mCustomScrollbar("scrollTo","bottom",{scrollInertia:0}); 
+                        $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 0 });
                     }
                 }
             })
@@ -552,31 +552,57 @@
             }
         })
     });
+
+    var typing = false;
+    var timeout = undefined;
+    var user;
     $(document).ready(function () {
         var cookieValue = sessionStorage.getItem('theme-setting');
+        if (cookieValue == 'light') {
+            $('body').removeClass('dark');
+            $('body').addClass('light');
+        } else {
+            $('body').removeClass('light');
+            $('body').addClass('dark');
+        }
+
+        $(document).off('click', '.btn-theme-change');
+        $(document).on('click', '.btn-theme-change', function () {
+
+            var cookieValue = sessionStorage.getItem('theme-setting');
             if (cookieValue == 'light') {
-                $('body').removeClass('dark');
-                $('body').addClass('light');
-            } else {
+                sessionStorage.setItem('theme-setting', 'dark');
                 $('body').removeClass('light');
                 $('body').addClass('dark');
+            } else {
+                sessionStorage.setItem('theme-setting', 'light');
+                $('body').removeClass('dark');
+                $('body').addClass('light');
             }
 
-            $(document).off('click', '.btn-theme-change');
-            $(document).on('click', '.btn-theme-change', function () {
+        });
 
-                var cookieValue = sessionStorage.getItem('theme-setting');
-                if (cookieValue == 'light') {
-                    sessionStorage.setItem('theme-setting', 'dark');
-                    $('body').removeClass('light');
-                    $('body').addClass('dark');
-                } else {
-                    sessionStorage.setItem('theme-setting', 'light');
-                    $('body').removeClass('dark');
-                    $('body').addClass('light');
-                }
+        $('#msgbox').keypress((e) => {
+            if (e.which != 13) {
+                typing = true
+                socket.emit('typing', { user: user, typing: true })
+                clearTimeout(timeout)
+                timeout = setTimeout(typingTimeout, 3000)
+            } else {
+                clearTimeout(timeout)
+                typingTimeout()
+                //sendMessage() function will be called once the user hits enter
+                sendMessage()
+            }
+        })
 
-            });
+        //code explained later
+        socket.on('display', (data) => {
+            if (data.typing == true)
+                $('.typing').text(`${data.user} is typing...`)
+            else
+                $('.typing').text("")
+        })
 
         $(".custom-scroll").mCustomScrollbar({
             theme: "dark"
