@@ -7,19 +7,22 @@ body label {
     font-weight: 400;
 }
 
-textarea{
+textarea {
     resize: none;
 }
-.bottom-block{
+
+.bottom-block {
     position: relative;
 }
-.bottom-block .typing{
+
+.bottom-block .typing {
     position: absolute;
-    top: -4px;
+    top: -27px;
     font-size: 15px;
     left: 22px;
     color: #FF485A;
 }
+
 .open-button {
     border: 0;
     display: block;
@@ -71,7 +74,6 @@ textarea{
     font-weight: bold;
     border: 0 none;
 }
-
 
 .form-control {
     box-shadow: none;
@@ -127,9 +129,11 @@ label.error {
     min-height: 100vh;
     background-position: left top;
 }
-.txt-tag-line{
+
+.txt-tag-line {
     margin-top: 40px;
 }
+
 @media(min-width:991px) {
     .txt-tag-line {
         padding-top: 250px;
@@ -154,34 +158,43 @@ label.error {
 #regiForm {
     display: none;
 }
-.message-outer-block{
+
+.message-outer-block {
     padding-bottom: 20px;
 }
-.message-outer-block .message-inner-block{
+
+.message-outer-block .message-inner-block {
     height: calc(100vh - 500px);
     overflow: auto;
 }
 
-.left-sidebar{
+.left-sidebar {
     min-width: 300px;
     padding-left: 20px;
     height: calc(100vh - 63px);
     transition: all 0.3s;
 }
-.left-sidebar .user-list{
+
+.left-sidebar .user-list {
     list-style: none;
     margin: 0;
     padding: 0;
 }
-.left-sidebar .user-list li{
+
+.left-sidebar .user-list li {
     padding: 3px 5px;
     border-radius: 23px 0 0 23px;
 }
-.left-sidebar .user-list li.active, .left-sidebar .user-list li:hover{
+
+.left-sidebar .user-list li.active, .left-sidebar .user-list li:hover {
     color: #FF485A;
     background: rgba(255, 72, 90, 0.10);
 }
-.left-sidebar .inner{overflow: auto; max-height: calc(100vh - 140px);}
+
+.left-sidebar .inner {
+    overflow: auto;
+    max-height: calc(100vh - 140px);
+}
 
 .left-sidebar.active {
     margin-left: -300px;
@@ -194,5 +207,4 @@ label.error {
     .left-sidebar.active {
         margin-left: 0;
     }
-    
 }
