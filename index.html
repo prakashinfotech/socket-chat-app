@@ -89,9 +89,9 @@
                 </div>
                 <input type="text" class="" name="NameChat" id="NameChat" placeholder="* Name" required />
 
-                <div class="clearfix mb-3 px-3">
+                <div class="clearfix mb-3">
                     <div class="custom-scroll chat-outer-scroll">
-                        <div id="messages" class="card-block clearfix">
+                        <div id="messages" class="card-block clearfix px-3">
 
                         </div>
                     </div>
@@ -267,7 +267,7 @@
                     messages.append(message);
                     //messages.insertAfter(message, messages.firstChild);
 
-                    jQuery(".custom-scroll").mCustomScrollbar("update");
+                    $(".custom-scroll").mCustomScrollbar("scrollTo","bottom",{scrollInertia:0}); 
                     //    $messages.html(html)
                     // html += '<li class="list-group-item">' + data[i] + '</li>';
                 }
@@ -285,8 +285,8 @@
                     //message.textContent = 'Me' + ": " + data[x].msg;
                     message.textContent = data[x].msg;
                     messages.append(message);
-                    jQuery(".custom-scroll").mCustomScrollbar("update");
                     //messages.insertAfter(message, messages.firstChild);
+                    $(".custom-scroll").mCustomScrollbar("scrollTo","bottom",{scrollInertia:0}); 
                 }
             }
         });
@@ -402,9 +402,30 @@
         //#endregion
 
         $(document).ready(function () {
-            $('.btn-theme-change').click(function () {
-                $('body').toggleClass('light').toggleClass('dark');
-            })
+            var cookieValue = sessionStorage.getItem('theme-setting');
+            if (cookieValue == 'light') {
+                $('body').removeClass('dark');
+                $('body').addClass('light');
+            } else {
+                $('body').removeClass('light');
+                $('body').addClass('dark');
+            }
+
+            $(document).off('click', '.btn-theme-change');
+            $(document).on('click', '.btn-theme-change', function () {
+
+                var cookieValue = sessionStorage.getItem('theme-setting');
+                if (cookieValue == 'light') {
+                    sessionStorage.setItem('theme-setting', 'dark');
+                    $('body').removeClass('light');
+                    $('body').addClass('dark');
+                } else {
+                    sessionStorage.setItem('theme-setting', 'light');
+                    $('body').removeClass('dark');
+                    $('body').addClass('light');
+                }
+
+            });
 
             $(".custom-scroll").mCustomScrollbar({
                 theme: "dark"
