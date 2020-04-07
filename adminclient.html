@@ -500,6 +500,7 @@
         $(document).on('click', '#users li', (e) => {
             $("#messages").empty();
             $("#messages2").empty();
+            $("#msg").empty();
             $('#users li').removeClass('active');
             $(e.currentTarget).addClass('active');
 
@@ -577,42 +578,40 @@
         })
     });
 
-    // var typing = false;
-    // var timeout = undefined;
-    // var user;
-    $(document).ready(function () {
+
+    // $(document).ready(function () {
+    var cookieValue = sessionStorage.getItem('theme-setting');
+    if (cookieValue == 'light') {
+        $('body').removeClass('dark');
+        $('body').addClass('light');
+    } else {
+        $('body').removeClass('light');
+        $('body').addClass('dark');
+    }
+
+    $(document).off('click', '.btn-theme-change');
+    $(document).on('click', '.btn-theme-change', function () {
+
         var cookieValue = sessionStorage.getItem('theme-setting');
         if (cookieValue == 'light') {
-            $('body').removeClass('dark');
-            $('body').addClass('light');
-        } else {
+            sessionStorage.setItem('theme-setting', 'dark');
             $('body').removeClass('light');
             $('body').addClass('dark');
+        } else {
+            sessionStorage.setItem('theme-setting', 'light');
+            $('body').removeClass('dark');
+            $('body').addClass('light');
         }
 
-        $(document).off('click', '.btn-theme-change');
-        $(document).on('click', '.btn-theme-change', function () {
+    });
 
-            var cookieValue = sessionStorage.getItem('theme-setting');
-            if (cookieValue == 'light') {
-                sessionStorage.setItem('theme-setting', 'dark');
-                $('body').removeClass('light');
-                $('body').addClass('dark');
-            } else {
-                sessionStorage.setItem('theme-setting', 'light');
-                $('body').removeClass('dark');
-                $('body').addClass('light');
-            }
-
-        });
-
-        $(".custom-scroll").mCustomScrollbar({
-            theme: "dark"
-        });
-        $('#sidebarCollapse').on('click', function () {
-            $('.left-sidebar').toggleClass('active');
-        });
-    })
+    $(".custom-scroll").mCustomScrollbar({
+        theme: "dark"
+    });
+    $('#sidebarCollapse').on('click', function () {
+        $('.left-sidebar').toggleClass('active');
+    });
+   // })
 
     //#endregion
 </script>
