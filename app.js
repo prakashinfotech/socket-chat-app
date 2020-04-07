@@ -291,7 +291,7 @@ var smtpTransport = nodemailer.createTransport({
   port: 587,
   auth: {
     user: "notifications@prakashinfotech.com",
-    pass: "P$$p!#$%"
+    pass: "P1$$p!#$%"
   }
 });
 

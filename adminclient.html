@@ -445,7 +445,7 @@
     socket.on('userAgentMessages', function (data) {
 
         if (data.length) {
-            console.log(data, 'allmessage')
+            // console.log(data, 'allmessage')
             customMessages.push(data)
 
         }
@@ -482,7 +482,7 @@
             $("#selectedUser").html(selectedName)
 
             allUserInformation.forEach(element => {
-                console.log(element, 'element')
+                // console.log(element, 'element')
                 // if (element.Name == selectedName) {
 
                 $("#userPhone").html(element[0].Number)
