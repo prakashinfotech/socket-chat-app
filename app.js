@@ -290,7 +290,7 @@ var smtpTransport = nodemailer.createTransport({
   host: 'smtp.office365.com',
   port: 587,
   auth: {
-    user: "notifications@prakashinfotech.com",
+    user: "notification@prakashinfotech.com",
     pass: "P1$$p!#$%"
   }
 });
