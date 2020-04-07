@@ -10,7 +10,16 @@ body label {
 textarea{
     resize: none;
 }
-
+.bottom-block{
+    position: relative;
+}
+.bottom-block .typing{
+    position: absolute;
+    top: -4px;
+    font-size: 12px;
+    left: 22px;
+    color: #FF485A;
+}
 .open-button {
     border: 0;
     display: block;
