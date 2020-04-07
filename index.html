@@ -261,7 +261,7 @@
                     // Build out message div
                     //  var html = ''
                     //debugger
-                    var message = document.createElement('div');
+                    var message = document.createElement('pre');
                     message.setAttribute('class', 'msg-block admin-message');
                     // document.getElementById("messages").innerHTML += '<p><b>Agent</b></p><p class="txtmsg">' + data[x].msg + '</p>';
                     //    message.textContent = html += '<p>Agent</p><p class="txtmsg">' + data[x].msg + '</p>';
@@ -283,7 +283,7 @@
                 for (var x = 0; x < data.length; x++) {
                     //debugger
                     // Build out message div
-                    var message = document.createElement('div');
+                    var message = document.createElement('pre');
                     message.setAttribute('class', 'msg-block user-message');
                     //message.textContent = 'Me' + ": " + data[x].msg;
                     message.textContent = data[x].msg;

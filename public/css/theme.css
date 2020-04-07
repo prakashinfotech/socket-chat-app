@@ -51,15 +51,22 @@ body.dark{
     background: #000;
     color: #fff;
 }
-
+.dark .msg-block{
+    color: #fff;
+}
+.light .msg-block{
+    color: #000;
+}
 .dark .msg-block.admin-message {
     background: #595d63;
     border-color: #595d63;
+    color: #fff;
 }
 
 .light .msg-block.admin-message {
     background: #f8f9fb;
     border-color: #f8f9fb;
+    color: #000;
 }
 .light .bottom-block {
     background: #F7F9FA;

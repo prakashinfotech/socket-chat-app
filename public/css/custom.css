@@ -105,6 +105,7 @@ label.error {
     float: right;
     font-size: 15px;
     line-height: 1.5;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .msg-block.admin-message {
