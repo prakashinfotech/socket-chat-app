@@ -287,7 +287,6 @@
                     message.setAttribute('class', 'msg-block user-message');
                     //message.textContent = 'Me' + ": " + data[x].msg;
                     message.textContent = data[x].msg;
-                    messages.append(message);
                     //messages.insertAfter(message, messages.firstChild);
 
                     function rep(message) {
@@ -300,6 +299,9 @@
                         return text.replace(Rexp,
                             "<a href='$1' target='_blank'>$3</a>");
                     }
+                    var texttemp = rep(text);
+                    messages.append(texttemp);
+
 
                     $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 0 });
                 }
@@ -336,9 +338,7 @@
                     socketId: socket.id
                 });
             }
-            //function GFG_Fun() {
-                $('#messages').innerHTML = rep(text);
-           // }
+
             $myForm2.show();
             $myForm.hide();
             $('#msgbox').val('')
