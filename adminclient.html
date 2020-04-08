@@ -533,20 +533,26 @@
 
             // });
 
-            // allUserInformation2.forEach(element => {
-            //     console.log(element, 'element')
-            //     if (element.Name == selectedName) {
+            allUserInformation2.forEach(element => {
+                console.log(element, 'element')
+                element.forEach(i => {
+                    if (i.Name == selectedName) {
 
-            //         $("#userPhone").html(element[0].Number)
-            //         $("#userEmail").html(element[0].Email)
+                        $("#userPhone").html(i.Number)
+                        $("#userEmail").html(i.Email)
 
 
-            //     }
+                    }
+                });
+                // if (element.Name == selectedName) {
 
-            // });
+                //     $("#userPhone").html(element[0].Number)
+                //     $("#userEmail").html(element[0].Email)
 
-            const result = allUserInformation2.filter(name => name.Name == selectedName);
-                console.log(result,'result')
+
+                // }
+
+            });
 
             document.getElementById("chatFormId").style.display = "block";
             // adminMessages.forEach(i => {
