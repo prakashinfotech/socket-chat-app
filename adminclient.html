@@ -164,8 +164,8 @@
                                         placeholder="Type message.." required></textarea>
                                 </div>
                                 <div>
-                                <button type="button" id="msgsubmit" class="btn btn-outline-danger px-2"
-                                    onclick="privatemessage()">Send</button>
+                                    <button type="button" id="msgsubmit" class="btn btn-outline-danger px-2"
+                                        onclick="privatemessage()">Send</button>
                                 </div>
                             </div>
 
@@ -459,11 +459,22 @@
 
 
     allUserInformation = []
+    allUserInformation2 = []
+
     socket.on('output', function (data) {
 
         if (data.length) {
             // console.log(data, 'allmessage')
             allUserInformation.push(data)
+        }
+
+    });
+
+    socket.on('users messages', function (data) {
+
+        if (data.length) {
+            console.log(data, 'details')
+            allUserInformation2.push(data)
         }
 
     });
@@ -510,15 +521,27 @@
             $("#PName").val(selectedName)
             $("#selectedUser").html(selectedName)
 
-            allUserInformation.forEach(element => {
-                // console.log(element, 'element')
-                // if (element.Name == selectedName) {
+            // allUserInformation.forEach(element => {
+            //     // console.log(element, 'element')
+            //     // if (element.Name == selectedName) {
 
-                $("#userPhone").html(element[0].Number)
-                $("#userEmail").html(element[0].Email)
+            //     $("#userPhone").html(element[0].Number)
+            //     $("#userEmail").html(element[0].Email)
 
 
-                //  }
+            //     //  }
+
+            // });
+
+            allUserInformation2.forEach(element => {
+                console.log(element, 'element')
+                if (element.Name == selectedName) {
+
+                    $("#userPhone").html(element[0].Number)
+                    $("#userEmail").html(element[0].Email)
+
+
+                }
 
             });
 
