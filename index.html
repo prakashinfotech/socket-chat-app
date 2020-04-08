@@ -296,18 +296,6 @@
 
         //#endregion
 
-        function linkify(str) {
-            var newStr = str.replace(/(<a href=")?((https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)))(">(.*)<\/a>)?/gi, function () {
-
-                return '<a href="' + arguments[2] + '">' + (arguments[7] || arguments[2]) + '</a>'
-            });
-            console.log(newStr)
-            $('#messages').html(newStr); //fill output area
-        }
-
-        var data = $('#messages').html(); //get input (content)
-        linkify(data); //run function on content
-
         //#region  onClick for send message
 
         $('#vi').on('click', (event) => {
