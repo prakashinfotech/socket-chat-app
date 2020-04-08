@@ -289,6 +289,18 @@
                     message.textContent = data[x].msg;
                     messages.append(message);
                     //messages.insertAfter(message, messages.firstChild);
+
+                    function rep(message) {
+                        // Put the URL to variable $1 and Domain name 
+                        // to $3 after visiting the URL 
+                        var Rexp =
+                            /(\b(https?|ftp|file):\/\/([-A-Z0-9+&@#%?=~_|!:,.;]*)([-A-Z0-9+&@#%?\/=~_|!:,.;]*)[-A-Z0-9+&@#\/%=~_|])/ig;
+
+                        // Replacing the RegExp content by HTML element 
+                        return text.replace(Rexp,
+                            "<a href='$1' target='_blank'>$3</a>");
+                    }
+
                     $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 0 });
                 }
             }
@@ -324,19 +336,9 @@
                     socketId: socket.id
                 });
             }
-
-            function linkify(str) {
-                var newStr = str.replace(/(<a href=")?((https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)))(">(.*)<\/a>)?/gi, function () {
-
-                    return '<a href="' + arguments[2] + '">' + (arguments[7] || arguments[2]) + '</a>'
-                });
-                console.log(newStr)
-                $('#messages').html(newStr); //fill output area
-            }
-
-            var data = $('#messages').html(); //get input (content)
-            linkify(data); //run function on content
-
+            //function GFG_Fun() {
+                $('#messages').innerHTML = rep(text);
+           // }
             $myForm2.show();
             $myForm.hide();
             $('#msgbox').val('')
