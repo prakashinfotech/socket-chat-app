@@ -83,35 +83,6 @@
         </div>
         <div class="flex-fill">
             <div class="container-fluid">
-
-                <!-- <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-                <div class="sidebar-nav">
-                    <ul class="nav">
-
-                        <li><a href="#" onclick="userNameForm()">Admin Name</a></li>
-                        <li><a href="#" onclick="onlineUsers()">Online Users</a></li>
-                        <li><a href="#" onclick="userMessages()">User Message</a></li> 
-                    </ul>
-                </div>
-            </div> -->
-
-
-                <!-- <div class="row" id="userFormArea">
-                    <div class="col-md-6">
-                        <form id="userForm">
-                            <div class="form-group">
-                                <label>Enter Username</label>
-                                <input type="text" class="form-control" id="Name" />
-                                <br />
-                                <button type="button" id="say_hello" class="btn btn-primary"
-                                    onclick="temp()">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div> -->
-
-
-
                 <div id="messageArea" class="row">
                     <div class="col-md-8 mt-3">
                         <!-- <div class="chat p-2" id="chat"></div> -->
@@ -144,19 +115,9 @@
                         </form>
 
                         <form class="chat-form mb-0" id="chatFormId">
-                            <!-- <div id="admin"><b>Hey Admin, </b> <button type="button" class="cancelAdmin"
-                                    onclick="closeForm()">
-                                    <i class="fa fa fa-times" aria-hidden="true"></i>
-                                </button></div> -->
-                            <!-- <br />
-                            <label><b>To: </b></label>
-                            <br /> -->
-                            <input id="PName" type="hidden" name="PName" required />
-                            <!-- <div class="card2" id="userMessages2">
-                                <div id="messages2" class="card-block2">
 
-                                </div>
-                            </div> -->
+                            <input id="PName" type="hidden" name="PName" required />
+
                             <div class="d-flex p-3 bottom-block rounded-bottom align-items-center">
                                 <div class="flex-fill mr-3">
                                     <p class="typing"></p>
@@ -168,10 +129,6 @@
                                         onclick="privatemessage()">Send</button>
                                 </div>
                             </div>
-
-
-                            <!-- <ul id="message"></ul> -->
-                            <!-- <button type="button" class="btn cancel btn-danger" onclick="closeForm()">Close</button> -->
                         </form>
 
                     </div>
@@ -495,13 +452,15 @@
         timeout = setTimeout(timeoutFunction, 2000);
     });
 
-    socket.on('typing', function (data) {
-        if (data) {
-            $('.typing').html(data);
-        } else {
-            $('.typing').html("");
-        }
-    });
+    function typingEvent() {
+        socket.on('typing', function (data) {
+            if (data) {
+                $('.typing').html(data);
+            } else {
+                $('.typing').html("");
+            }
+        });
+    }
 
     //#region  Onlick for Li message display and open chat box
 
@@ -597,6 +556,7 @@
                         message.setAttribute('class', 'msg-block user-message');
                         message.textContent = i[x].Name + ": " + i[x].msg;
                         messages.appendChild(message);
+                        typingEvent();
                         //messages.insertAfter(message, messages.firstChild);
                         $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 0 });
                     }
