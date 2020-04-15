@@ -323,29 +323,6 @@
 
     //#endregion
 
-    //#region function for bind messages 
-
-    // function bindAllMessages(selectedName) {
-    //     socket.on('all messages', function (data) {
-    //         if (data.length) {
-    //             allMessages.push(data);
-    //             for (var x = 0; x < data.length; x++) {
-    //                 // Build out message div
-    //                 if (data[x].Name == selectedName) {
-
-    //                     var message = document.createElement('div');
-    //                     message.setAttribute('class', 'chat-message');
-    //                     message.textContent = data[x].Name + ": " + data[x].msg;
-    //                     messages.appendChild(message);
-    //                     messages.insertBefore(message, messages.firstChild);
-    //                 }
-    //             }
-    //         }
-    //     })
-    // }
-
-    //#endregion
-
     //#region Display User Messages
 
     socket.on('all messages', function (data) {
@@ -480,18 +457,6 @@
             $("#PName").val(selectedName)
             $("#selectedUser").html(selectedName)
 
-            // allUserInformation.forEach(element => {
-            //     // console.log(element, 'element')
-            //     // if (element.Name == selectedName) {
-
-            //     $("#userPhone").html(element[0].Number)
-            //     $("#userEmail").html(element[0].Email)
-
-
-            //     //  }
-
-            // });
-
             allUserInformation2.forEach(element => {
                 console.log(element, 'element')
                 element.forEach(i => {
@@ -503,42 +468,10 @@
 
                     }
                 });
-                // if (element.Name == selectedName) {
-
-                //     $("#userPhone").html(element[0].Number)
-                //     $("#userEmail").html(element[0].Email)
-
-
-                // }
 
             });
 
             document.getElementById("chatFormId").style.display = "block";
-            // adminMessages.forEach(i => {
-            //     for (var x = 0; x < i.length; x++) {
-            //         if (i[x].msgTo == $('#PName').val()) {
-            //             var message = document.createElement('div');
-            //             message.setAttribute('class', 'msg-block admin-message');
-            //             // message.textContent = 'Psspl TO' + ' ' + i[x].msgTo + ":" + i[x].msg;
-            //             message.textContent = 'Psspl' + ' ' + ":" + i[x].msg;
-
-            //             messages.appendChild(message);
-            //             // messages.insertAfter(message, messages.firstChild);
-            //         }
-            //     }
-            // });
-
-            // allMessages.forEach(i => {
-            //     for (var x = 0; x < i.length; x++) {
-            //         if (i[x].Name == selectedName) {
-            //             var message = document.createElement('div');
-            //             message.setAttribute('class', 'msg-block user-message');
-            //             message.textContent = i[x].Name + ": " + i[x].msg;
-            //             messages.appendChild(message);
-            //             //messages.insertAfter(message, messages.firstChild);
-            //         }
-            //     }
-            // });
 
             customMessages.forEach(i => {
                 for (var x = 0; x < i.length; x++) {
