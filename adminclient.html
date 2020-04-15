@@ -336,6 +336,16 @@
                 message.setAttribute('class', 'msg-block user-message');
                 message.textContent = data[x].Name + ": " + data[x].msg;
                 messages.appendChild(message);
+                $('.msg-block').each(function () {
+                        // Get the content
+                        var str = $(this).text();
+                        // Set the regex string
+                        var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
+                        // Replace plain text links by hyperlinks
+                        var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
+                        // Echo link
+                        $(this).html(replaced_text);
+                    });
                 $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 0 });
                 // messages.insertAfter(message, messages.firstChild);
             }
@@ -372,6 +382,16 @@
                 message.setAttribute('class', 'msg-block admin-message');
                 message.textContent = 'Psspl ' + ' ' + ":" + data[x].msg;
                 messages.appendChild(message);
+                $('.msg-block').each(function () {
+                        // Get the content
+                        var str = $(this).text();
+                        // Set the regex string
+                        var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
+                        // Replace plain text links by hyperlinks
+                        var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
+                        // Echo link
+                        $(this).html(replaced_text);
+                    });
                 $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 0 });
                 //  messages.insertAfter(message, messages.firstChild);
             }
@@ -482,6 +502,16 @@
                         message.textContent = 'Psspl' + ' ' + ":" + i[x].msg;
 
                         messages.appendChild(message);
+                        $('.msg-block').each(function () {
+                        // Get the content
+                        var str = $(this).text();
+                        // Set the regex string
+                        var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
+                        // Replace plain text links by hyperlinks
+                        var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
+                        // Echo link
+                        $(this).html(replaced_text);
+                    });
                         $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 0 });
                         // messages.insertAfter(message, messages.firstChild);
                     } else if (i[x].Name == selectedName) {
@@ -490,6 +520,16 @@
                         message.textContent = i[x].Name + ": " + i[x].msg;
                         messages.appendChild(message);
                         typingEvent();
+                        $('.msg-block').each(function () {
+                        // Get the content
+                        var str = $(this).text();
+                        // Set the regex string
+                        var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
+                        // Replace plain text links by hyperlinks
+                        var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
+                        // Echo link
+                        $(this).html(replaced_text);
+                    });
                         //messages.insertAfter(message, messages.firstChild);
                         $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 0 });
                     }

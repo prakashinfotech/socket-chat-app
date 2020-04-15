@@ -241,7 +241,10 @@
         //#region  Socket connect
         // var socket = io.connect('http://localhost:4000');
 
-        var socket = io.connect('http://52.173.20.11:4000/', { transports: ['websocket'], upgrade: false });
+        var socket = io.connect('http://52.173.20.11:4000/', {
+            transports: ['websocket'],
+            upgrade: false
+        });
 
         socket.on('connect', () => {
             // console.log(socket.id, 'socket.id'); // an alphanumeric id...
@@ -269,8 +272,19 @@
                     message.textContent = data[x].msg; //data[x].msgTo (for Name)
                     messages.append(message);
                     //messages.insertAfter(message, messages.firstChild);
-
-                    $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 0 });
+                    $('.msg-block').each(function () {
+                        // Get the content
+                        var str = $(this).text();
+                        // Set the regex string
+                        var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
+                        // Replace plain text links by hyperlinks
+                        var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
+                        // Echo link
+                        $(this).html(replaced_text);
+                    });
+                    $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", {
+                        scrollInertia: 0
+                    });
                     //    $messages.html(html)
                     // html += '<li class="list-group-item">' + data[i] + '</li>';
                 }
@@ -289,10 +303,20 @@
                     message.textContent = data[x].msg;
                     messages.append(message);
 
+                    $('.msg-block').each(function () {
+                        // Get the content
+                        var str = $(this).text();
+                        // Set the regex string
+                        var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
+                        // Replace plain text links by hyperlinks
+                        var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
+                        // Echo link
+                        $(this).html(replaced_text);
+                    });
                     //messages.insertAfter(message, messages.firstChild);
-
-
-                    $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 0 });
+                    $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", {
+                        scrollInertia: 0
+                    });
                 }
             }
         });

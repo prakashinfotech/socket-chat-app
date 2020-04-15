@@ -2,7 +2,9 @@
     outline: none !important;
     box-shadow: none !important;
 }
-
+a{
+    color: #dc3545;
+}
 body label {
     font-weight: 400;
 }
