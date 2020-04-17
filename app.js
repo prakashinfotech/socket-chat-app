@@ -116,16 +116,16 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
 
           socket.on('disconnect', function (data) {
 
-            for (let i = 0; i < users.length; i++) {
+            // for (let i = 0; i < users.length; i++) {
 
-              if (users[i].Id === socket.id) {
-                users.splice(i, 1);
-              }
-            }
-            // users.splice(users.indexOf(socket.Name), 1);
-            updateUsernames();
-            connections.splice(connections.indexOf(socket), 1);
-            console.log('Disconnected: %s sockets connected', connections.length);
+            //   if (users[i].Id === socket.id) {
+            //     users.splice(i, 1);
+            //   }
+            // }
+            // // users.splice(users.indexOf(socket.Name), 1);
+            // updateUsernames();
+            // connections.splice(connections.indexOf(socket), 1);
+            // console.log('Disconnected: %s sockets connected', connections.length);
           })
           //res.end("Login invalid");
           console.log(err)
@@ -139,21 +139,22 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
           console.log("Credentials wrong");
           // res.end("Login invalid");
           console.log(err)
-          socket.emit('my error', 'Some error happened');
-
           socket.on('disconnect', function (data) {
 
-            for (let i = 0; i < users.length; i++) {
+            // for (let i = 0; i < users.length; i++) {
 
-              if (users[i].Id === socket.id) {
-                users.splice(i, 1);
-              }
-            }
-            // users.splice(users.indexOf(socket.Name), 1);
-            updateUsernames();
-            connections.splice(connections.indexOf(socket), 1);
-            console.log('Disconnected: %s sockets connected', connections.length);
+            //   if (users[i].Id === socket.id) {
+            //     users.splice(i, 1);
+            //   }
+            // }
+            // // users.splice(users.indexOf(socket.Name), 1);
+            // updateUsernames();
+            // connections.splice(connections.indexOf(socket), 1);
+            // console.log('Disconnected: %s sockets connected', connections.length);
           })
+          socket.emit('my error', 'Some error happened');
+
+
         }
       });
 
