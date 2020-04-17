@@ -114,6 +114,19 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
         if (user === null) {
           socket.emit('my error', 'Some error happened');
 
+          socket.on('disconnect', function (data) {
+
+            for (let i = 0; i < users.length; i++) {
+
+              if (users[i].Id === socket.id) {
+                users.splice(i, 1);
+              }
+            }
+            // users.splice(users.indexOf(socket.Name), 1);
+            updateUsernames();
+            connections.splice(connections.indexOf(socket), 1);
+            console.log('Disconnected: %s sockets connected', connections.length);
+          })
           //res.end("Login invalid");
           console.log(err)
         } else if (user.username === data.username && user.password === data.password && user.role === "admin") {
@@ -128,6 +141,19 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
           console.log(err)
           socket.emit('my error', 'Some error happened');
 
+          socket.on('disconnect', function (data) {
+
+            for (let i = 0; i < users.length; i++) {
+
+              if (users[i].Id === socket.id) {
+                users.splice(i, 1);
+              }
+            }
+            // users.splice(users.indexOf(socket.Name), 1);
+            updateUsernames();
+            connections.splice(connections.indexOf(socket), 1);
+            console.log('Disconnected: %s sockets connected', connections.length);
+          })
         }
       });
 
