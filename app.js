@@ -22,6 +22,12 @@ users = [];
 connections = [];
 history = [];
 
+var currentDate = new Date();
+var year = currentDate.getFullYear();
+var month = currentDate.getMonth();
+var day = currentDate.getDate();
+var time = currentDate.getMinutes();
+var newDate = new Date(year, month, day, time);
 mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatform', { useUnifiedTopology: true }, function (err, db) { //for azure DB
   //mongo.connect('mongodb://localhost/mongochatform', { useUnifiedTopology: true }, function (err, db) {   //for run in local db
 
@@ -212,7 +218,7 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
       let socketId = data.socketId
 
       // Insert message
-      chat.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: new Date() }, function () {
+      chat.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: newDate }, function () {
         io.emit('all messages', [data]);
         io.emit('userAgentMessages', [data]);
 
@@ -264,11 +270,11 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
         socket.join(data.msgTo, data.id);
 
         // Insert message
-        chats.insert({ msg: msg, msgTo: msgTo, toId: toId, timestamps: new Date() }, function () {
+        chats.insert({ msg: msg, msgTo: msgTo, toId: toId, timestamps: newDate }, function () {
           io.emit('output pmessages', [data]);
           io.emit('userAgentMessages', [data]);
 
-          userAgentMessages.insert({ msg: msg, msgTo: msgTo, toId: toId, timestamps: new Date() })
+          userAgentMessages.insert({ msg: msg, msgTo: msgTo, toId: toId, timestamps: newDate })
         });
 
       } else {
