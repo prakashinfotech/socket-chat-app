@@ -327,7 +327,6 @@
 
     socket.on('all messages', function (data) {
         if (data.length) {
-            var newArray = data.sort((a, b) => (a.timestamps > b.timestamps) ? 1 : -1)
 
             allMessages.push(data);
             for (var x = 0; x < data.length; x++) {
@@ -337,15 +336,15 @@
                 message.textContent = data[x].Name + ": " + data[x].msg;
                 messages.appendChild(message);
                 $('.msg-block').each(function () {
-                        // Get the content
-                        var str = $(this).text();
-                        // Set the regex string
-                        var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
-                        // Replace plain text links by hyperlinks
-                        var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
-                        // Echo link
-                        $(this).html(replaced_text);
-                    });
+                    // Get the content
+                    var str = $(this).text();
+                    // Set the regex string
+                    var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
+                    // Replace plain text links by hyperlinks
+                    var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
+                    // Echo link
+                    $(this).html(replaced_text);
+                });
                 $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 0 });
                 // messages.insertAfter(message, messages.firstChild);
             }
@@ -374,7 +373,6 @@
     socket.on('output pmessages', function (data) {
 
         if (data.length) {
-            var newArray = data.sort((a, b) => (a.timestamps > b.timestamps) ? 1 : -1)
             adminMessages.push(data);
 
             for (var x = 0; x < data.length; x++) {
@@ -383,15 +381,15 @@
                 message.textContent = 'Psspl ' + ' ' + ":" + data[x].msg;
                 messages.appendChild(message);
                 $('.msg-block').each(function () {
-                        // Get the content
-                        var str = $(this).text();
-                        // Set the regex string
-                        var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
-                        // Replace plain text links by hyperlinks
-                        var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
-                        // Echo link
-                        $(this).html(replaced_text);
-                    });
+                    // Get the content
+                    var str = $(this).text();
+                    // Set the regex string
+                    var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
+                    // Replace plain text links by hyperlinks
+                    var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
+                    // Echo link
+                    $(this).html(replaced_text);
+                });
                 $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 0 });
                 //  messages.insertAfter(message, messages.firstChild);
             }
@@ -503,15 +501,15 @@
 
                         messages.appendChild(message);
                         $('.msg-block').each(function () {
-                        // Get the content
-                        var str = $(this).text();
-                        // Set the regex string
-                        var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
-                        // Replace plain text links by hyperlinks
-                        var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
-                        // Echo link
-                        $(this).html(replaced_text);
-                    });
+                            // Get the content
+                            var str = $(this).text();
+                            // Set the regex string
+                            var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
+                            // Replace plain text links by hyperlinks
+                            var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
+                            // Echo link
+                            $(this).html(replaced_text);
+                        });
                         $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 0 });
                         // messages.insertAfter(message, messages.firstChild);
                     } else if (i[x].Name == selectedName) {
@@ -521,15 +519,15 @@
                         messages.appendChild(message);
                         typingEvent();
                         $('.msg-block').each(function () {
-                        // Get the content
-                        var str = $(this).text();
-                        // Set the regex string
-                        var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
-                        // Replace plain text links by hyperlinks
-                        var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
-                        // Echo link
-                        $(this).html(replaced_text);
-                    });
+                            // Get the content
+                            var str = $(this).text();
+                            // Set the regex string
+                            var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
+                            // Replace plain text links by hyperlinks
+                            var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
+                            // Echo link
+                            $(this).html(replaced_text);
+                        });
                         //messages.insertAfter(message, messages.firstChild);
                         $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 0 });
                     }
