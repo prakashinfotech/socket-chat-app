@@ -22,7 +22,7 @@ app.use(express.static(__dirname + '/public'));
 users = [];
 connections = [];
 history = [];
-const now = new Date();
+// const now = new Date();
 //var newTime = date.format(now, 'YYYY/MM/DD HH:mm:ss');    // => '2015/01/02 23:14:05'
 mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatform', { useUnifiedTopology: true }, function (err, db) { //for azure DB
   //mongo.connect('mongodb://localhost/mongochatform', { useUnifiedTopology: true }, function (err, db) {   //for run in local db
@@ -212,6 +212,7 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
       let msg = data.msg;
       let Name = data.Name;
       let socketId = data.socketId
+      var now = new Date();
 
       // Insert message
       chat.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: date.format(now, 'YYYY/MM/DD HH:mm:ss') }, function () {
@@ -259,6 +260,7 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
       let msg = data.msg;
       let msgTo = data.msgTo;
       let toId = data.toId;
+      var now = new Date();
 
       // if (users[data.msgTo]) {
       if (data.toId) {
