@@ -7,6 +7,7 @@ var url = require('url');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 var nodemailer = require("nodemailer");
+const date = require('date-and-time');
 
 // var methodOverride = require('method-override');
 // var cors = require('cors');
@@ -21,13 +22,9 @@ app.use(express.static(__dirname + '/public'));
 users = [];
 connections = [];
 history = [];
-
-var currentDate = new Date();
-var year = currentDate.getFullYear();
-var month = currentDate.getMonth();
-var day = currentDate.getDate();
-var time = currentDate.getMinutes();
-var newDate = new Date(year, month, day, time);
+const now = new Date();
+var newTime = date.format(now, 'YYYY/MM/DD HH:mm:ss');    // => '2015/01/02 23:14:05'
+console.log(newTime, 'time')
 mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatform', { useUnifiedTopology: true }, function (err, db) { //for azure DB
   //mongo.connect('mongodb://localhost/mongochatform', { useUnifiedTopology: true }, function (err, db) {   //for run in local db
 
@@ -218,13 +215,13 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
       let socketId = data.socketId
 
       // Insert message
-      chat.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: newDate }, function () {
+      chat.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: newTime }, function () {
         io.emit('all messages', [data]);
         io.emit('userAgentMessages', [data]);
 
       });
       userMessages.insert({ msg: msg, Name: Name, socketId: socketId });
-      userAgentMessages.insert({ msg: msg, Name: Name, socketId: socketId });
+      userAgentMessages.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: newTime });
     });
 
     //#endregion
@@ -270,11 +267,11 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
         socket.join(data.msgTo, data.id);
 
         // Insert message
-        chats.insert({ msg: msg, msgTo: msgTo, toId: toId, timestamps: newDate }, function () {
+        chats.insert({ msg: msg, msgTo: msgTo, toId: toId, timestamps: newTime }, function () {
           io.emit('output pmessages', [data]);
           io.emit('userAgentMessages', [data]);
 
-          userAgentMessages.insert({ msg: msg, msgTo: msgTo, toId: toId, timestamps: newDate })
+          userAgentMessages.insert({ msg: msg, msgTo: msgTo, toId: toId, timestamps: newTime })
         });
 
       } else {
