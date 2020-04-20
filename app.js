@@ -23,8 +23,7 @@ users = [];
 connections = [];
 history = [];
 const now = new Date();
-var newTime = date.format(now, 'YYYY/MM/DD HH:mm:ss');    // => '2015/01/02 23:14:05'
-console.log(newTime, 'time')
+//var newTime = date.format(now, 'YYYY/MM/DD HH:mm:ss');    // => '2015/01/02 23:14:05'
 mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatform', { useUnifiedTopology: true }, function (err, db) { //for azure DB
   //mongo.connect('mongodb://localhost/mongochatform', { useUnifiedTopology: true }, function (err, db) {   //for run in local db
 
@@ -215,13 +214,13 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
       let socketId = data.socketId
 
       // Insert message
-      chat.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: newTime }, function () {
+      chat.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: date.format(now, 'YYYY/MM/DD HH:mm:ss') }, function () {
         io.emit('all messages', [data]);
         io.emit('userAgentMessages', [data]);
 
       });
       userMessages.insert({ msg: msg, Name: Name, socketId: socketId });
-      userAgentMessages.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: newTime });
+      userAgentMessages.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: date.format(now, 'YYYY/MM/DD HH:mm:ss') });
     });
 
     //#endregion
@@ -267,11 +266,11 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
         socket.join(data.msgTo, data.id);
 
         // Insert message
-        chats.insert({ msg: msg, msgTo: msgTo, toId: toId, timestamps: newTime }, function () {
+        chats.insert({ msg: msg, msgTo: msgTo, toId: toId, timestamps: date.format(now, 'YYYY/MM/DD HH:mm:ss') }, function () {
           io.emit('output pmessages', [data]);
           io.emit('userAgentMessages', [data]);
 
-          userAgentMessages.insert({ msg: msg, msgTo: msgTo, toId: toId, timestamps: newTime })
+          userAgentMessages.insert({ msg: msg, msgTo: msgTo, toId: toId, timestamps: date.format(now, 'YYYY/MM/DD HH:mm:ss') })
         });
 
       } else {
