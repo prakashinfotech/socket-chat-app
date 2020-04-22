@@ -22,6 +22,7 @@
 
 
     <script src="js/jquery.validate.js"></script>
+    <script src="js/dateandtime.min.js"></script>
 
 </head>
 
@@ -279,6 +280,8 @@
     //#region  Enter key event for text area
 
     $('#msg').keypress(function (event) {
+        var now = new Date();
+
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13' && !event.shiftKey) {
             event.preventDefault();
@@ -289,7 +292,9 @@
                         socket.emit("private-message", {
                             msgTo: $('#PName').val(),
                             "msg": $('#msg').val(),
-                            toId: i.Id
+                            toId: i.Id,
+                            timestamps: window.date.format(now, 'YYYY/MM/DD HH:mm:ss')
+
                             //toId:allUsers
                         });
                     }
@@ -305,6 +310,8 @@
     //#region  Send message onClick
 
     function privatemessage() {
+        var now = new Date();
+
         var isValidate = formValidation()
         if (isValidate) {
             allUsers.forEach(i => {
@@ -312,7 +319,8 @@
                     socket.emit("private-message", {
                         msgTo: $('#PName').val(),
                         "msg": $('#msg').val(),
-                        toId: i.Id
+                        toId: i.Id,
+                        timestamps: window.date.format(now, 'YYYY/MM/DD HH:mm:ss')
                         //toId:allUsers
                     });
                 }

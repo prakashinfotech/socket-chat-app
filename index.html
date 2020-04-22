@@ -221,6 +221,7 @@
         //#region Enter keypress for text area
 
         $('#msgbox').keypress(function (event) {
+            var now = new Date();
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if (keycode == '13' && !event.shiftKey) {
                 event.preventDefault();
@@ -230,7 +231,8 @@
                         msg: $('#msgbox').val(),
                         //  $Name : $('#Name').val()
                         Name: $('#NameChat').val(),
-                        socketId: socket.id
+                        socketId: socket.id,
+                        timestamps: window.date.format(now, 'YYYY/MM/DD HH:mm:ss')
                     });
                 }
                 $('#msgbox').val('')

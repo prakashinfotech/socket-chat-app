@@ -211,17 +211,17 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
 
       let msg = data.msg;
       let Name = data.Name;
-      let socketId = data.socketId
-      var now = new Date();
+      let socketId = data.socketId;
+      let timestamps = data.timestamps
 
       // Insert message
-      chat.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: date.format(now, 'YYYY/MM/DD HH:mm:ss') }, function () {
+      chat.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: timestamps }, function () {
         io.emit('all messages', [data]);
         io.emit('userAgentMessages', [data]);
 
       });
-      userMessages.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: date.format(now, 'YYYY/MM/DD HH:mm:ss') });
-      userAgentMessages.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: date.format(now, 'YYYY/MM/DD HH:mm:ss') });
+      userMessages.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: timestamps });
+      userAgentMessages.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: timestamps });
     });
 
     //#endregion
@@ -260,7 +260,7 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
       let msg = data.msg;
       let msgTo = data.msgTo;
       let toId = data.toId;
-      var now = new Date();
+      let timestamps = data.timestamps;
 
       // if (users[data.msgTo]) {
       if (data.toId) {
@@ -268,11 +268,11 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
         socket.join(data.msgTo, data.id);
 
         // Insert message
-        chats.insert({ msg: msg, msgTo: msgTo, toId: toId, timestamps: date.format(now, 'YYYY/MM/DD HH:mm:ss') }, function () {
+        chats.insert({ msg: msg, msgTo: msgTo, toId: toId, timestamps: timestamps }, function () {
           io.emit('output pmessages', [data]);
           io.emit('userAgentMessages', [data]);
 
-          userAgentMessages.insert({ msg: msg, msgTo: msgTo, toId: toId, timestamps: date.format(now, 'YYYY/MM/DD HH:mm:ss') })
+          userAgentMessages.insert({ msg: msg, msgTo: msgTo, toId: toId, timestamps: timestamps })
         });
 
       } else {
