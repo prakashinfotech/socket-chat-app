@@ -333,7 +333,7 @@
                 // Build out message div
                 var message = document.createElement('pre');
                 message.setAttribute('class', 'msg-block user-message');
-                message.textContent = data[x].Name + ": " + data[x].msg + "<small>" + data[x].timestamps + "</small>";
+                message.textContent = data[x].Name + ": " + data[x].msg;
                 messages.appendChild(message);
                 $('.msg-block').each(function () {
                     // Get the content
@@ -378,7 +378,7 @@
             for (var x = 0; x < data.length; x++) {
                 var message = document.createElement('pre');
                 message.setAttribute('class', 'msg-block admin-message');
-                message.textContent = 'Psspl ' + ' ' + ":" + data[x].msg + "<small>" + data[x].timestamps + "</small>";
+                message.textContent = 'Psspl ' + ' ' + ":" + data[x].msg;
                 messages.appendChild(message);
                 $('.msg-block').each(function () {
                     // Get the content
@@ -497,7 +497,7 @@
                         var message = document.createElement('pre');
                         message.setAttribute('class', 'msg-block admin-message');
                         // message.textContent = 'Psspl TO' + ' ' + i[x].msgTo + ":" + i[x].msg;
-                        message.textContent = 'Psspl' + ' ' + ":" + i[x].msg + "<small>" + i[x].timestamps + "</small>"
+                        message.textContent = 'Psspl' + ' ' + ":" + i[x].msg;
 
                         messages.appendChild(message);
                         $('.msg-block').each(function () {
@@ -515,7 +515,7 @@
                     } else if (i[x].Name == selectedName) {
                         var message = document.createElement('pre');
                         message.setAttribute('class', 'msg-block user-message');
-                        message.textContent = i[x].Name + ": " + i[x].msg + "<small>" + i[x].timestamps + "</small>"
+                        message.textContent = i[x].Name + ": " + i[x].msg;
                         messages.appendChild(message);
                         typingEvent();
                         $('.msg-block').each(function () {

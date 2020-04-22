@@ -269,7 +269,7 @@
                     // document.getElementById("messages").innerHTML += '<p><b>Agent</b></p><p class="txtmsg">' + data[x].msg + '</p>';
                     //    message.textContent = html += '<p>Agent</p><p class="txtmsg">' + data[x].msg + '</p>';
                     //message.textContent = 'Psspl' + ":" + data[x].msg; //data[x].msgTo (for Name)
-                    message.textContent = data[x].msg + "<small>" + data[x].timestamps + "</small>"; //data[x].msgTo (for Name)
+                    message.textContent = data[x].msg; //data[x].msgTo (for Name)
                     messages.append(message);
                     //messages.insertAfter(message, messages.firstChild);
                     $('.msg-block').each(function () {
@@ -294,13 +294,14 @@
         // Handle Output User 
         socket.on('all messages', function (data) {
             if ((data.length) && (data[0].Name == $('#NameChat').val()) && (data[0].msg != undefined)) {
+                console.log(data, 'user data')
                 for (var x = 0; x < data.length; x++) {
                     //debugger
                     // Build out message div
                     var message = document.createElement('pre');
                     message.setAttribute('class', 'msg-block user-message');
                     //message.textContent = 'Me' + ": " + data[x].msg;
-                    message.textContent = data[x].msg + "<small>" + data[x].timestamps + "</small>";
+                    message.textContent = data[x].msg;
                     messages.append(message);
 
                     $('.msg-block').each(function () {
