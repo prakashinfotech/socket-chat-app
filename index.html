@@ -263,6 +263,8 @@
         socket.on('output pmessages', function (data) {
             // var uName = localStorage.getItem('name')
             if ((data.length) && (data[0].toId == socket.id) && (data[0].msgTo == $('#NameChat').val())) {
+                console.log(data, 'admin data')
+
                 for (var x = 0; x < data.length; x++) {
                     // Build out message div
                     //  var html = ''
