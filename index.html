@@ -274,7 +274,7 @@
                     // document.getElementById("messages").innerHTML += '<p><b>Agent</b></p><p class="txtmsg">' + data[x].msg + '</p>';
                     //    message.textContent = html += '<p>Agent</p><p class="txtmsg">' + data[x].msg + '</p>';
                     //message.textContent = 'Psspl' + ":" + data[x].msg; //data[x].msgTo (for Name)
-                    message.textContent = data[x].msg; //data[x].msgTo (for Name)
+                    message.textContent = data[x].msg + ' ' + "<small>" + data[x].timestamps + "</small>";//data[x].msgTo (for Name)
                     messages.append(message);
                     //messages.insertAfter(message, messages.firstChild);
                     $('.msg-block').each(function () {
@@ -306,7 +306,7 @@
                     var message = document.createElement('pre');
                     message.setAttribute('class', 'msg-block user-message');
                     //message.textContent = 'Me' + ": " + data[x].msg;
-                    message.textContent = data[x].msg;
+                    message.textContent = data[x].msg + ' ' + "<small>" + data[x].timestamps + "</small>";
                     messages.append(message);
 
                     $('.msg-block').each(function () {
