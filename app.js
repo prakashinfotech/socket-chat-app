@@ -220,7 +220,7 @@ mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatfor
         io.emit('userAgentMessages', [data]);
 
       });
-      userMessages.insert({ msg: msg, Name: Name, socketId: socketId });
+      userMessages.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: date.format(now, 'YYYY/MM/DD HH:mm:ss') });
       userAgentMessages.insert({ msg: msg, Name: Name, socketId: socketId, timestamps: date.format(now, 'YYYY/MM/DD HH:mm:ss') });
     });
 
