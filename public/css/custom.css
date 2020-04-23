@@ -99,9 +99,20 @@ label.error {
     color: #dc3545;
     font-size: 12px;
 }
-
+.message-outer{
+    position: relative;
+}
+.message-outer small{
+    position: absolute;
+    right: 11%;
+    bottom: 21px;
+    
+}
+.message-outer .user-message + small{
+    right: 5px;
+}
 .msg-block {
-    padding: 10px 10px;
+    padding: 10px 10px 15px;
     border: 1px solid #ccc;
     border-radius: 10px;
     margin-bottom: 20px;

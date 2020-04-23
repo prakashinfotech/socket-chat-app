@@ -270,7 +270,7 @@
 
     function temp() {
         socket.emit('new user', $Name.val(), function (data) {
-            if (data) { }
+            if (data) {}
         });
         $Name.val('');
     }
@@ -337,25 +337,18 @@
         if (data.length) {
 
             allMessages.push(data);
-            for (var x = 0; x < data.length; x++) {
-                // Build out message div
-                var message = document.createElement('pre');
-                message.setAttribute('class', 'msg-block user-message');
-                message.textContent = data[x].Name + ": " + data[x].msg + ' ' + "<small>" + data[x].timestamps + "</small>";
-                messages.appendChild(message);
-                $('.msg-block').each(function () {
-                    // Get the content
-                    var str = $(this).text();
-                    // Set the regex string
-                    var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
-                    // Replace plain text links by hyperlinks
-                    var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
-                    // Echo link
-                    $(this).html(replaced_text);
-                });
-                $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 0 });
-                // messages.insertAfter(message, messages.firstChild);
-            }
+            $('#messages').append('<div class="clearfix message-outer"><pre class="msg-block user-message">' +
+                data[0].Name + ' : ' + data[0].msg + '</pre><small>' + data[0].timestamps + '</small></div>'
+            )
+            $('.msg-block').each(function () {
+                var str = $(this).text();
+                var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
+                var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
+                $(this).html(replaced_text);
+            });
+            $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", {
+                scrollInertia: 0
+            });
         }
     });
 
@@ -383,24 +376,18 @@
         if (data.length) {
             adminMessages.push(data);
 
-            for (var x = 0; x < data.length; x++) {
-                var message = document.createElement('pre');
-                message.setAttribute('class', 'msg-block admin-message');
-                message.textContent = 'Psspl ' + ' ' + ":" + data[x].msg + ' ' + "<small>" + data[x].timestamps + "</small>";
-                messages.appendChild(message);
-                $('.msg-block').each(function () {
-                    // Get the content
-                    var str = $(this).text();
-                    // Set the regex string
-                    var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
-                    // Replace plain text links by hyperlinks
-                    var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
-                    // Echo link
-                    $(this).html(replaced_text);
-                });
-                $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 0 });
-                //  messages.insertAfter(message, messages.firstChild);
-            }
+            $('#messages').append(
+                '<div class="clearfix message-outer"><pre class="msg-block admin-message">PSSPL : ' + data[
+                    0].msg + '</pre><small>' + data[0].timestamps + '</small></div>')
+            $('.msg-block').each(function () {
+                var str = $(this).text();
+                var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
+                var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
+                $(this).html(replaced_text);
+            });
+            $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", {
+                scrollInertia: 0
+            });
         }
     });
 
@@ -502,42 +489,37 @@
             customMessages.forEach(i => {
                 for (var x = 0; x < i.length; x++) {
                     if (i[x].msgTo == $('#PName').val()) {
-                        var message = document.createElement('pre');
-                        message.setAttribute('class', 'msg-block admin-message');
-                        // message.textContent = 'Psspl TO' + ' ' + i[x].msgTo + ":" + i[x].msg;
-                        message.textContent = 'Psspl' + ' ' + ":" + i[x].msg + ' ' + "<small>" + i[x].timestamps + "</small>";
-
-                        messages.appendChild(message);
+                        $('#messages').append(
+                            '<div class="clearfix message-outer"><pre class="msg-block admin-message">Psspl : ' +
+                            i[x].msg + '</pre><small>' + i[x].timestamps + '</small></div>')
                         $('.msg-block').each(function () {
-                            // Get the content
                             var str = $(this).text();
-                            // Set the regex string
-                            var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
-                            // Replace plain text links by hyperlinks
-                            var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
-                            // Echo link
+                            var regex =
+                                /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
+                            var replaced_text = str.replace(regex,
+                                "<a href='$1' target='_blank'>$1</a>");
                             $(this).html(replaced_text);
                         });
-                        $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 0 });
-                        // messages.insertAfter(message, messages.firstChild);
+                        $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", {
+                            scrollInertia: 0
+                        });
                     } else if (i[x].Name == selectedName) {
-                        var message = document.createElement('pre');
-                        message.setAttribute('class', 'msg-block user-message');
-                        message.textContent = i[x].Name + ": " + i[x].msg + ' ' + "<small>" + i[x].timestamps + "</small>";
-                        messages.appendChild(message);
+                        $('#messages').append(
+                            '<div class="clearfix message-outer"><pre class="msg-block user-message">' +
+                            i[x].Name + ' : ' + i[x].msg + '</pre><small>' + i[x]
+                            .timestamps + '</small></div>')
                         typingEvent();
                         $('.msg-block').each(function () {
-                            // Get the content
                             var str = $(this).text();
-                            // Set the regex string
-                            var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
-                            // Replace plain text links by hyperlinks
-                            var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
-                            // Echo link
+                            var regex =
+                                /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
+                            var replaced_text = str.replace(regex,
+                                "<a href='$1' target='_blank'>$1</a>");
                             $(this).html(replaced_text);
                         });
-                        //messages.insertAfter(message, messages.firstChild);
-                        $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 0 });
+                        $(".custom-scroll").mCustomScrollbar("scrollTo", "bottom", {
+                            scrollInertia: 0
+                        });
                     }
                 }
             })
@@ -584,7 +566,7 @@
     $('#sidebarCollapse').on('click', function () {
         $('.left-sidebar').toggleClass('active');
     });
-   // })
+    // })
 
     //#endregion
 </script>
