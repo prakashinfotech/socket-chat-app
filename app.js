@@ -388,7 +388,8 @@ app.post('/api/upload', (req, res, next) => {
   console.log(req, 'req')
   console.log(res, 'res')
 
-  const form = formidable({ multiples: true });
+  // const form = formidable({ multiples: true });
+  var form = new formidable.IncomingForm();
 
   form.parse(req, (err, fields, files) => {
     if (err) {
