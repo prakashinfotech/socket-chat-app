@@ -390,13 +390,13 @@ app.post('/api/upload', (req, res, next) => {
 
   const form = formidable({ multiples: true });
 
-  // form.parse(req, (err, fields, files) => {
-  //   if (err) {
-  //     next(err);
-  //     return;
-  //   }
-  //   res.json({ fields, files });
-  // });
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    // res.json({ fields, files });
+  });
   form.on('fileBegin', function (name, file) {
     file.path = __dirname + '/uploads/' + file.name;
   });
