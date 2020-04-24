@@ -31,7 +31,11 @@
     <button class="btn-theme-change">Theme Change</button>
     <button type="button" class="open-button" onclick="openForm()">Live Chat
     </button>
-
+    <form ref='uploadForm' id='uploadForm' action='http://pssplnodechat.centralus.cloudapp.azure.com:4000/upload'
+        method='post' encType="multipart/form-data">
+        <input type="file" name="sampleFile" />
+        <input type='submit' value='Upload!' />
+    </form>
     <div class="chat-popup" id="myForm">
 
         <form id="addUserForm" class="form-container">
@@ -265,7 +269,7 @@
                 console.log(data, 'admin data')
 
                 for (var x = 0; x < data.length; x++) {
-                    $('#messages').append('<div class="clearfix message-outer"><pre class="msg-block admin-message">PSSPL : ' + data[0].msg +'</pre><small>'+ data[0].timestamps + '</small></div>')
+                    $('#messages').append('<div class="clearfix message-outer"><pre class="msg-block admin-message">PSSPL : ' + data[0].msg + '</pre><small>' + data[0].timestamps + '</small></div>')
                     $('.msg-block').each(function () {
                         var str = $(this).text();
                         var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
@@ -284,7 +288,7 @@
             if ((data.length) && (data[0].Name == $('#NameChat').val()) && (data[0].msg != undefined)) {
                 console.log(data, 'user data')
                 for (var x = 0; x < data.length; x++) {
-                    $('#messages').append('<div class="clearfix message-outer"><pre class="msg-block user-message">' + data[0].msg +'</pre><small>'+ data[0].timestamps + '</small></div>')
+                    $('#messages').append('<div class="clearfix message-outer"><pre class="msg-block user-message">' + data[0].msg + '</pre><small>' + data[0].timestamps + '</small></div>')
                     $('.msg-block').each(function () {
                         var str = $(this).text();
                         var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
