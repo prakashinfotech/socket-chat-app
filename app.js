@@ -7,7 +7,7 @@ var url = require('url');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 var nodemailer = require("nodemailer");
-const date = require('date-and-time');
+const formidable = require('formidable');
 
 // var methodOverride = require('method-override');
 // var cors = require('cors');
@@ -22,8 +22,6 @@ app.use(express.static(__dirname + '/public'));
 users = [];
 connections = [];
 history = [];
-// const now = new Date();
-//var newTime = date.format(now, 'YYYY/MM/DD HH:mm:ss');    // => '2015/01/02 23:14:05'
 mongo.connect('mongodb://pssplnodechat.centralus.cloudapp.azure.com/mongochatform', { useUnifiedTopology: true }, function (err, db) { //for azure DB
   //mongo.connect('mongodb://localhost/mongochatform', { useUnifiedTopology: true }, function (err, db) {   //for run in local db
 
@@ -385,6 +383,21 @@ app.get('/admin', (req, res) => {
 app.get('/test1', (req, res) => {
   res.sendFile(__dirname + '/test.html');
 })
+
+app.post('/api/upload', (req, res, next) => {
+  console.log(req, 'req')
+  console.log(res, 'res')
+
+  const form = formidable({ multiples: true });
+
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.json({ fields, files });
+  });
+});
 
 app.post('/logout', (req, res) => {
   req.session.destroy((err) => {
