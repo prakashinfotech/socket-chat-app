@@ -32,10 +32,6 @@
     <button type="button" class="open-button" onclick="openForm()">Live Chat
     </button>
 
-    <div>Text field title: <input type="text" name="title" /></div>
-    <div>File: <input type="file" name="someExpressFiles" multiple="multiple" /></div>
-    <input type="submit" id="uploadFile" value="Upload" />
-
     <div class="chat-popup" id="myForm">
 
         <form id="addUserForm" class="form-container">
@@ -269,7 +265,7 @@
                 console.log(data, 'admin data')
 
                 for (var x = 0; x < data.length; x++) {
-                    $('#messages').append('<div class="clearfix message-outer"><pre class="msg-block admin-message">PSSPL : ' + data[0].msg + '</pre><small>' + data[0].timestamps + '</small></div>')
+                    $('#messages').append('<div class="clearfix message-outer"><pre class="msg-block admin-message">PSSPL : ' + data[0].msg +'</pre><small>'+ data[0].timestamps + '</small></div>')
                     $('.msg-block').each(function () {
                         var str = $(this).text();
                         var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
@@ -288,7 +284,7 @@
             if ((data.length) && (data[0].Name == $('#NameChat').val()) && (data[0].msg != undefined)) {
                 console.log(data, 'user data')
                 for (var x = 0; x < data.length; x++) {
-                    $('#messages').append('<div class="clearfix message-outer"><pre class="msg-block user-message">' + data[0].msg + '</pre><small>' + data[0].timestamps + '</small></div>')
+                    $('#messages').append('<div class="clearfix message-outer"><pre class="msg-block user-message">' + data[0].msg +'</pre><small>'+ data[0].timestamps + '</small></div>')
                     $('.msg-block').each(function () {
                         var str = $(this).text();
                         var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/ig
@@ -303,16 +299,6 @@
         });
 
         //#endregion
-
-
-        $('#uploadFile').on('click', (event) => {
-            event.preventDefault();
-            $.post("/api/upload", function (data) {
-                if (data == "sent") {
-                    //   $("#message").empty().html("<p>Email is been sent at " + to + " . Please check inbox !</p>");
-                }
-            });
-        });
 
         //#region  onClick for send message
 
