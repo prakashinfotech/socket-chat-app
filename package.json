@@ -6,7 +6,7 @@
     "start": "nodemon app.js"
   },
   "dependencies": {
-    "async": "^3.1.0",
+    "async": "^3.2.2",
     "date-and-time": "^0.13.1",
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
